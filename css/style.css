@@ -2,3 +2,16 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.puzzles {
+    margin: 0 auto;
+    padding: 0;
+    height: auto;
+}
+
+.element {
+    float: left;
+    cursor: pointer;
+    background-color: blue;
+    margin: 1px;
+}
