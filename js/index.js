@@ -3,6 +3,7 @@ const CUBE_ROW_AMOUNT = 16;
 
 class Puzzle {
     constructor() {
+        this.puzzles = [];
         this.$puzzleWrapper = null;
         
         this.setupPuzzle();
@@ -10,7 +11,9 @@ class Puzzle {
     
     setupPuzzle() {
         this.addPuzzleWrapper();
-        this.addElementsToPuzzleWrapper();
+        this.buildPuzzleElements();
+        this.shuffleElements();
+        this.displayElements();
     }
     
     addPuzzleWrapper() {
@@ -20,21 +23,52 @@ class Puzzle {
         document.body.appendChild(this.$puzzleWrapper);
     }
     
-    addElementsToPuzzleWrapper() {
+    buildPuzzleElements() {
         for (let i = 0; i < CUBE_ROW_AMOUNT - 1; i++) {
             this.buildPuzzleElement(i);
         }
     }
     
+    shuffleElements() {
+        let shuffledElements = Utils.shuffle(this.puzzles);
+        console.log(shuffledElements);
+    }
+    
+    addToArray($element, index) {
+        this.puzzles.push({
+            element: $element,
+            index: index
+        })
+    }
+    
+    displayElements() {
+        this.puzzles.forEach(($element) => {
+            this.render($element);
+        })
+    }
+    
+    addListener($element) {
+        $element.addEventListener('click', this.clickElementHandler.bind(this));
+    }
+    
+    render($element) {
+        this.$puzzleWrapper.appendChild($element.element);
+    }
+    
     buildPuzzleElement(i) {
+        let $element = this.createPuzzleElement(i);
+        this.addListener($element);
+        this.addToArray($element, i);
+    }
+    
+    createPuzzleElement(i) {
         let $element = document.createElement('div');
         $element.setAttribute('class', 'element');
         $element.setAttribute('id', String(i));
         $element.style.width = (CUBE_SIZE - 2) + 'px';
         $element.style.height = (CUBE_SIZE - 2) + 'px';
-    
-        $element.addEventListener('click', this.clickElementHandler.bind(this));
-        this.$puzzleWrapper.appendChild($element);
+        $element.innerText = i;
+        return $element;
     }
     
     clickElementHandler(event) {
