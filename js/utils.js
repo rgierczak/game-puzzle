@@ -1,3 +1,6 @@
+const CUBE_SIZE = 30;
+const CUBE_ROW_AMOUNT = 16;
+
 let Utils = {
     shuffle(array) {
         let result = array;
