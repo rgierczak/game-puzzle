@@ -10,8 +10,10 @@ body {
 }
 
 .element {
-    float: left;
     cursor: pointer;
     background-color: blue;
     margin: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
