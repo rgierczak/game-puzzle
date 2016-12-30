@@ -1,1 +1,15 @@
 # puzzle
+
+> :game: The numeric puzzle.
+
+## How to play ?
+
+The goal of the game is to display all the numbers in increment order.
+
+## Demo
+
+https://rgierczak.github.io/puzzle/
+
+## License
+
+[The MIT License](https://github.com/rgierczak/puzzle/blob/master/LICENSE) @ 2016
