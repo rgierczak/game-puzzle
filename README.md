@@ -8,7 +8,7 @@ The goal of the game is to display all the numbers in increment order.
 
 ## Demo
 
-https://rgierczak.github.io/puzzle/
+https://rgierczak.github.io/game-puzzle/
 
 ## License
 
