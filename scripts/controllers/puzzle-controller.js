@@ -20,23 +20,12 @@
         }
         
         setupPuzzle() {
-            this.buildPuzzleElements();
-            this.renderPuzzleList();
-        }
-    
-        renderPuzzleList() {
-            this.puzzleList.each((puzzleModel) => {
-                this.renderPuzzleComponent(puzzleModel);
-            });
-        }
-        
-        renderPuzzleComponent(model) {
-            new PuzzleElementView(model);
-        }
-    
-        buildPuzzleElements() {
             for (let i = 0; i < PUZZLE_ELEMENTS_AMOUNT; i++)
-                this.puzzleList.addPuzzleElement(new PuzzleElementModel(i))
+                this.puzzleList.addPuzzleElement(new PuzzleElementModel(i));
+    
+            this.puzzleList.each((puzzleModel) => {
+                new PuzzleElementView(puzzleModel);
+            });
         }
         
         setupListeners() {}

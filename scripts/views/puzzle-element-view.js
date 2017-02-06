@@ -1,6 +1,8 @@
 (function (root) {
     'use strict';
     
+    let DOMHelper = root.puzzle.helpers.DOMHelper;
+    
     class PuzzleElementView {
         constructor(model) {
             this.template = null;
@@ -8,13 +10,11 @@
         }
         
         render(model) {
-            this.createElement(model.index);
-        }
-        
-        createElement(index) {
             this.template = document.createElement('div');
+            this.template.setAttribute('class', model.id);
             
-            console.log('template: ', this.template);
+            let $wrapper = document.getElementById('puzzle-wrapper');
+            DOMHelper.render($wrapper, this.template);
         }
     }
     
