@@ -3,7 +3,7 @@ body {
     padding: 0;
 }
 
-.puzzles {
+#puzzle-wrapper {
     margin: 0 auto;
     padding: 0;
     height: auto;
@@ -11,9 +11,7 @@ body {
 
 .element {
     cursor: pointer;
-    background-color: blue;
-    margin: 1px;
+    background-color: #ff8d55;
     position: absolute;
-    top: 0;
-    left: 0;
+    border: solid 3px white;
 }

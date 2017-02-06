@@ -3,15 +3,15 @@
     
     class PuzzleListModel {
         constructor() {
-            this.puzzleList = [];
+            this.list = [];
         }
         
         addPuzzleElement(element) {
-            this.puzzleList.push(element);
+            this.list.push(element);
         }
         
         each(callback) {
-            this.puzzleList.forEach(callback);
+            this.list.forEach(callback);
         }
     }
     
