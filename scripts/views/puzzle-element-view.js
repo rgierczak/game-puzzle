@@ -13,28 +13,33 @@
         }
         
         display(model) {
-            this.buildTemplate(model);
-            this.setElementStyle(model);
-            this.setElementText(model);
+            this.buildTemplate();
+            this.setStyle();
+            this.setPosition(model);
+            this.setText(model);
             this.render();
         }
         
-        buildTemplate(model) {
+        buildTemplate() {
             this.template = document.createElement('div');
             this.template.setAttribute('class', 'element');
+
+        }
+        
+        setPosition(model) {
+            this.template.style.left = model.position.left + 'px';
+            this.template.style.top = model.position.top + 'px';
             this.template.setAttribute('data-id', model.position.currentId);
         }
         
-        setElementStyle(model) {
+        setStyle() {
             this.template.style.width = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
             this.template.style.height = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
             this.template.style.lineHeight = SETTINGS.PUZZLE_ELEMENT_SIZE + 'px';
             this.template.style.fontSize = SETTINGS.PUZZLE_ELEMENT_SIZE / 3 + 'px';
-            this.template.style.left = model.position.left + 'px';
-            this.template.style.top = model.position.top + 'px';
         }
         
-        setElementText(model) {
+        setText(model) {
             this.template.innerText = model.originId;
         }
         

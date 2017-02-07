@@ -6,11 +6,11 @@
             this.list = [];
         }
         
-        addPuzzleElement(element) {
+        add(element) {
             this.list.push(element);
         }
         
-        setElementPosition(callback) {
+        setPosition(callback) {
             this.list.forEach((element, index) => {
                 element.setCurrentPosition(index);
                 callback(element);
