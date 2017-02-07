@@ -6,37 +6,36 @@
     
     class PuzzleElementView {
         constructor(model) {
-            this.model = model;
             this.template = null;
             
-            this.display();
+            this.display(model);
             this.setupListeners();
         }
         
-        display() {
-            this.buildTemplate();
-            this.setElementStyle();
-            this.setElementText();
+        display(model) {
+            this.buildTemplate(model);
+            this.setElementStyle(model);
+            this.setElementText(model);
             this.render();
         }
         
-        buildTemplate() {
+        buildTemplate(model) {
             this.template = document.createElement('div');
             this.template.setAttribute('class', 'element');
-            this.template.setAttribute('data-id', this.model.position.currentId);
+            this.template.setAttribute('data-id', model.position.currentId);
         }
         
-        setElementStyle() {
+        setElementStyle(model) {
             this.template.style.width = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
             this.template.style.height = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
             this.template.style.lineHeight = SETTINGS.PUZZLE_ELEMENT_SIZE + 'px';
             this.template.style.fontSize = SETTINGS.PUZZLE_ELEMENT_SIZE / 3 + 'px';
-            this.template.style.left = this.model.position.left + 'px';
-            this.template.style.top = this.model.position.top + 'px';
+            this.template.style.left = model.position.left + 'px';
+            this.template.style.top = model.position.top + 'px';
         }
         
-        setElementText() {
-            this.template.innerText = this.model.originId;
+        setElementText(model) {
+            this.template.innerText = model.originId;
         }
         
         render() {
