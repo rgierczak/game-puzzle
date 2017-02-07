@@ -16,6 +16,12 @@
                 callback(element);
             });
         }
+        
+        find(id) {
+            return this.list.find((element) => {
+                return element.position.currentId === Number(id);
+            });
+        }
     }
     
     root.puzzle.models.PuzzleListModel = PuzzleListModel;

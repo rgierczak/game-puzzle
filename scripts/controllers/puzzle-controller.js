@@ -43,12 +43,6 @@
             document.addEventListener('element-view:click', (event) => this.getMovementDirection(event));
         }
         
-        findPuzzleModel(payload) {
-            return this.puzzleModels.list.find((element) => {
-                return element.position.currentId === Number(payload.currentId);
-            });
-        }
-        
         updateClickedElementPosition(payload, clicked) {
             this.puzzleModels.list.forEach((element) => {
                 if (element.position.currentId === Number(payload.currentId)) {
@@ -74,23 +68,24 @@
         getMovementDirection(event) {
             let position = null;
             let payload = event.detail;
-            let puzzleElementModel = this.findPuzzleModel(payload);
+            let payloadId = payload.currentId;
+            let puzzleElementModel = this.puzzleModels.find(payloadId);
             let currentId = puzzleElementModel.position.currentId;
             
             switch (true) {
-                case this.checkMoveRight(payload):
+                case this.checkMoveRight(payloadId):
                     position = currentId + 1;
                     break;
                 
-                case this.checkMoveLeft(payload):
+                case this.checkMoveLeft(payloadId):
                     position = currentId - 1;
                     break;
                 
-                case this.checkMoveTop(payload):
+                case this.checkMoveTop(payloadId):
                     position = currentId - SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
-                case this.checkMoveBottom(payload):
+                case this.checkMoveBottom(payloadId):
                     position = currentId + SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
@@ -101,38 +96,38 @@
             this.setClickedElementPosition(payload, puzzleElementModel, position);
         }
         
-        checkMoveRight(payload) {
-            let clicked = this.findPuzzleModel(payload);
-            let isRightElement = this.checkRightElement(payload);
+        checkMoveRight(id) {
+            let clicked = this.puzzleModels.find(id);
+            let isRightElement = this.checkRightElement(id);
             let puzzleContainerSize = SETTINGS.PUZZLE_ELEMENT_SIZE * (SETTINGS.PUZZLE_ELEMENTS_IN_ROW - 1);
             let isRightBorderReached = clicked.position.left + SETTINGS.PUZZLE_ELEMENT_SIZE > puzzleContainerSize;
             return !isRightElement && !isRightBorderReached;
         }
         
-        checkMoveLeft(payload) {
-            let clicked = this.findPuzzleModel(payload);
-            let isPreviousElement = this.checkLeftElement(payload);
+        checkMoveLeft(id) {
+            let clicked = this.puzzleModels.find(id);
+            let isPreviousElement = this.checkLeftElement(id);
             let isLeftBorderReached = clicked.position.left - SETTINGS.PUZZLE_ELEMENT_SIZE < 0;
             return !isPreviousElement && !isLeftBorderReached;
         }
         
-        checkMoveTop(payload) {
-            let clicked = this.findPuzzleModel(payload);
-            let isTopElement = this.checkTopElement(payload);
+        checkMoveTop(id) {
+            let clicked = this.puzzleModels.find(id);
+            let isTopElement = this.checkTopElement(id);
             let isTopBorderReached = clicked.position.top - SETTINGS.PUZZLE_ELEMENT_SIZE < 0;
             return !isTopElement && !isTopBorderReached;
         }
         
-        checkMoveBottom(payload) {
-            let clicked = this.findPuzzleModel(payload);
-            let isBottomElement = this.checkBottomElement(payload);
+        checkMoveBottom(id) {
+            let clicked = this.puzzleModels.find(id);
+            let isBottomElement = this.checkBottomElement(id);
             let puzzleContainerSize = SETTINGS.PUZZLE_ELEMENT_SIZE * (SETTINGS.PUZZLE_ELEMENTS_IN_ROW - 1);
             let isBottomBorderReached = clicked.position.top + SETTINGS.PUZZLE_ELEMENT_SIZE > puzzleContainerSize;
             return !isBottomElement && !isBottomBorderReached;
         }
         
-        checkRightElement(payload) {
-            let clicked = this.findPuzzleModel(payload);
+        checkRightElement(id) {
+            let clicked = this.puzzleModels.find(id);
             return this.puzzleModels.list.find((el) => {
                 let isTopEqual = el.position.top === clicked.position.top;
                 let isRight = el.position.left === clicked.position.left + SETTINGS.PUZZLE_ELEMENT_SIZE;
@@ -140,8 +135,8 @@
             });
         }
         
-        checkLeftElement(payload) {
-            let clicked = this.findPuzzleModel(payload);
+        checkLeftElement(id) {
+            let clicked = this.puzzleModels.find(id);
             return this.puzzleModels.list.find((el) => {
                 let isTopEqual = el.position.top === clicked.position.top;
                 let isLeft = el.position.left === clicked.position.left - SETTINGS.PUZZLE_ELEMENT_SIZE;
@@ -149,8 +144,8 @@
             });
         }
         
-        checkTopElement(payload) {
-            let clicked = this.findPuzzleModel(payload);
+        checkTopElement(id) {
+            let clicked = this.puzzleModels.find(id);
             return this.puzzleModels.list.find((el) => {
                 let isLeftEqual = el.position.left === clicked.position.left;
                 let isTop = el.position.top === clicked.position.top - SETTINGS.PUZZLE_ELEMENT_SIZE;
@@ -158,8 +153,8 @@
             });
         }
         
-        checkBottomElement(payload) {
-            let clicked = this.findPuzzleModel(payload);
+        checkBottomElement(id) {
+            let clicked = this.puzzleModels.find(id);
             return this.puzzleModels.list.find((el) => {
                 let isLeftEqual = el.position.left === clicked.position.left;
                 let isBottom = el.position.top === clicked.position.top + SETTINGS.PUZZLE_ELEMENT_SIZE;
