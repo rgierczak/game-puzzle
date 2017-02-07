@@ -17,10 +17,18 @@
             });
         }
         
-        find(id) {
+        find(callback) {
+            return this.list.find(callback);
+        }
+        
+        findById(id) {
             return this.list.find((element) => {
                 return element.position.currentId === Number(id);
             });
+        }
+        
+        each(callback) {
+            this.list.forEach(callback);
         }
     }
     
