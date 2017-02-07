@@ -1,9 +1,19 @@
 (function (root) {
     'use strict';
     
+    let SETTINGS = root.puzzle.settings;
+    
     let DOMHelper = {
         render($wrapper, $element) {
             $wrapper.appendChild($element);
+        },
+    
+        setTopPosition(id) {
+            return SETTINGS.PUZZLE_ELEMENT_SIZE * Math.floor(id / 4);
+        },
+    
+        setLeftPosition(id) {
+            return SETTINGS.PUZZLE_ELEMENT_SIZE * (id % 4);
         }
     };
     

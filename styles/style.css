@@ -1,6 +1,8 @@
 body {
     margin: 0;
     padding: 0;
+    
+    user-select: none;
 }
 
 #puzzle-wrapper {
@@ -10,10 +12,10 @@ body {
 }
 
 .element {
-    color: #25ff2d;
+    color: #ffffff;
     text-align: center;
     cursor: pointer;
-    background-color: #ff211e;
+    background-color: #018aff;
     position: absolute;
     border: solid 3px #ffffff;
 }

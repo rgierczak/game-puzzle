@@ -40,7 +40,7 @@
         }
         
         setupListeners() {
-            document.addEventListener('puzzle:click', (event) => this.getMovementDirection(event));
+            document.addEventListener('element-view:click', (event) => this.getMovementDirection(event));
         }
         
         findPuzzleModel(payload) {
@@ -57,11 +57,12 @@
             });
         }
         
-        setClickedElementPosition(payload, clicked, position) {
-            clicked.setCurrentPosition(position);
-            this.updateClickedElementPosition(payload, clicked);
+        setClickedElementPosition(payload, puzzleElementModel, position) {
+            puzzleElementModel.setPosition(position);
+            this.updateClickedElementPosition(payload, puzzleElementModel);
+            
             let puzzleElementView = this.getPuzzleElementView(payload);
-            puzzleElementView.setPosition(clicked);
+            puzzleElementView.setPosition(puzzleElementModel);
         }
     
         getPuzzleElementView(payload) {
@@ -73,8 +74,8 @@
         getMovementDirection(event) {
             let position = null;
             let payload = event.detail;
-            let clicked = this.findPuzzleModel(payload);
-            let currentId = clicked.position.currentId;
+            let puzzleElementModel = this.findPuzzleModel(payload);
+            let currentId = puzzleElementModel.position.currentId;
             
             switch (true) {
                 case this.checkMoveRight(payload):
@@ -97,7 +98,7 @@
                     return null;
             }
             
-            this.setClickedElementPosition(payload, clicked, position);
+            this.setClickedElementPosition(payload, puzzleElementModel, position);
         }
         
         checkMoveRight(payload) {

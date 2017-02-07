@@ -1,7 +1,7 @@
 (function (root) {
     'use strict';
-    
-    let SETTINGS = root.puzzle.settings;
+
+    let DOMHelper = root.puzzle.helpers.DOMHelper;
     
     class PuzzleElementModel {
         constructor(id) {
@@ -13,20 +13,12 @@
             };
         }
         
-        setCurrentPosition(id) {
+        setPosition(id) {
             this.position = {
                 currentId: id,
-                left: this.setLeftPosition(id),
-                top: this.setTopPosition(id)
+                left: DOMHelper.setLeftPosition(id),
+                top: DOMHelper.setTopPosition(id)
             }
-        }
-    
-        setTopPosition(id) {
-            return SETTINGS.PUZZLE_ELEMENT_SIZE * Math.floor(id / 4);
-        }
-    
-        setLeftPosition(id) {
-            return SETTINGS.PUZZLE_ELEMENT_SIZE * (id % 4);
         }
     }
     

@@ -60,7 +60,7 @@
                     originId: this.originId
                 }
             };
-            document.dispatchEvent(new CustomEvent('puzzle:click', dto));
+            document.dispatchEvent(new CustomEvent('element-view:click', dto));
         }
     }
     

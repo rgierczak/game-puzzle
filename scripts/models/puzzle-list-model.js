@@ -12,7 +12,7 @@
         
         setPosition(callback) {
             this.list.forEach((element, index) => {
-                element.setCurrentPosition(index);
+                element.setPosition(index);
                 callback(element);
             });
         }
