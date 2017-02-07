@@ -10,8 +10,11 @@
             this.list.push(element);
         }
         
-        each(callback) {
-            this.list.forEach(callback);
+        setElementPosition(callback) {
+            this.list.forEach((element, index) => {
+                element.setPosition(index);
+                callback(element);
+            });
         }
     }
     

@@ -27,9 +27,9 @@
             for (let i = 0; i < PUZZLE_ELEMENTS_AMOUNT - 1; i++)
                 this.puzzle.addPuzzleElement(new PuzzleElementModel(i));
             
-            //let shuffledList = PuzzleHelper.shuffle(this.puzzle.list);
+            PuzzleHelper.shuffle(this.puzzle.list);
     
-            this.puzzle.each((element) => {
+            this.puzzle.setElementPosition((element) => {
                 new PuzzleElementView(element);
             });
         }
@@ -39,8 +39,8 @@
         }
         
         clickHandler(event) {
-            console.log(event.detail);
             let direction = this.getMovementDirection(event.detail);
+            console.log('element: ', event.detail, 'direction: ', direction);
         }
     
         getMovementDirection(clickedId) {

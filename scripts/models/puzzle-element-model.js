@@ -6,23 +6,24 @@
     class PuzzleElementModel {
         constructor(id) {
             this.id = id;
-            this.position = null;
-            
-            this.setPosition(id);
+            this.position = {
+                left: null,
+                top: null
+            };
         }
         
         setPosition(id) {
             this.position = {
-                left: this.getLeftPosition(id),
-                top: this.geTopPosition(id)
+                left: this.setLeftPosition(id),
+                top: this.setTopPosition(id)
             }
         }
     
-        geTopPosition(id) {
+        setTopPosition(id) {
             return PUZZLE_ELEMENT_SIZE * Math.floor(id / 4);
         }
     
-        getLeftPosition(id) {
+        setLeftPosition(id) {
             return PUZZLE_ELEMENT_SIZE * (id % 4);
         }
     }
