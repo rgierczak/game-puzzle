@@ -14,7 +14,6 @@
     class PuzzleController {
         constructor() {
             this.puzzle = new PuzzleListModel();
-            // this.clicked = null;
             this.setup();
         }
         
@@ -38,7 +37,6 @@
             document.addEventListener('puzzle:click', (event) => this.getMovementDirection(event.detail));
         }
         
-        //TODO(rgierczak): sprawdzić czy możemy stworzyć this.clicked.
         buildClickedObject(clicked) {
             return {
                 model: this.puzzle.list.find((element) => {
