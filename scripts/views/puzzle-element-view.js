@@ -12,20 +12,20 @@
             this.display();
             this.setupListeners();
         }
-    
+        
         display() {
             this.buildTemplate();
             this.setElementStyle();
             this.setElementText();
             this.render();
         }
-    
+        
         buildTemplate() {
             this.template = document.createElement('div');
             this.template.setAttribute('class', 'element');
             this.template.setAttribute('data-id', this.model.position.currentId);
         }
-    
+        
         setElementStyle() {
             this.template.style.width = PUZZLE_ELEMENT_SIZE - 3 + 'px';
             this.template.style.height = PUZZLE_ELEMENT_SIZE - 3 + 'px';
@@ -36,18 +36,23 @@
         setElementText() {
             this.template.innerText = this.model.originId;
         }
-    
+        
         render() {
             let $wrapper = document.getElementById('puzzle-wrapper');
             DOMHelper.render($wrapper, this.template);
         }
         
         setupListeners() {
-            this.template.addEventListener('click', this.clickHandler);
+            this.template.addEventListener('click', (event) => this.clickHandler(event));
         }
         
         clickHandler(event) {
-            let dto = { detail: event.target.dataset.id };
+            let dto = {
+                detail: {
+                    currentId: event.target.dataset.id,
+                    template: this.template
+                }
+            };
             document.dispatchEvent(new CustomEvent('puzzle:click', dto));
         }
     }

@@ -13,7 +13,7 @@
             };
         }
         
-        setPosition(id) {
+        setCurrentPosition(id) {
             this.position = {
                 currentId: id,
                 left: this.setLeftPosition(id),
