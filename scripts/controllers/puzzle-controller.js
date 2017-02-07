@@ -69,31 +69,30 @@
         getMovementDirection(clicked) {
             let position = null;
             let clickedObject = this.buildClickedObject(clicked);
-            
+            let currentId = clickedObject.model.position.currentId;
+
             switch (true) {
                 case this.checkMoveRight(clicked):
-                    position = clickedObject.model.position.currentId + 1;
-                    this.setClickeElementPosition(clicked, clickedObject, position);
+                    position = currentId + 1;
                     break;
                 
                 case this.checkMoveLeft(clicked):
-                    position = clickedObject.model.position.currentId - 1;
-                    this.setClickeElementPosition(clicked, clickedObject, position);
+                    position = currentId - 1;
                     break;
                 
                 case this.checkMoveTop(clicked):
-                    position = clickedObject.model.position.currentId - PUZZLE_ELEMENTS_IN_ROW;
-                    this.setClickeElementPosition(clicked, clickedObject, position);
+                    position = currentId - PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
                 case this.checkMoveBottom(clicked):
-                    position = clickedObject.model.position.currentId + PUZZLE_ELEMENTS_IN_ROW;
-                    this.setClickeElementPosition(clicked, clickedObject, position);
+                    position = currentId + PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
                 default:
                     return null;
             }
+
+            this.setClickeElementPosition(clicked, clickedObject, position);
         }
         
         checkMoveRight(clicked) {
