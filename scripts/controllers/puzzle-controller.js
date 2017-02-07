@@ -1,11 +1,7 @@
 (function (root) {
     'use strict';
     
-    const PUZZLE_ELEMENT_SIZE = 30;
-    const PUZZLE_ELEMENTS_AMOUNT = 16;
-    const PUZZLE_ELEMENTS_IN_ROW = 4;
-    const PUZZLE_CONTAINER_SIZE = PUZZLE_ELEMENT_SIZE * (PUZZLE_ELEMENTS_IN_ROW - 1);
-    
+    let SETTINGS = root.puzzle.settings;
     let PuzzleHelper = root.puzzle.helpers.PuzzleHelper;
     let PuzzleListModel = root.puzzle.models.PuzzleListModel;
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
@@ -23,7 +19,7 @@
         }
         
         setupPuzzle() {
-            for (let i = 0; i < PUZZLE_ELEMENTS_AMOUNT - 1; i++)
+            for (let i = 0; i < SETTINGS.PUZZLE_ELEMENTS_AMOUNT - 1; i++)
                 this.puzzle.addPuzzleElement(new PuzzleElementModel(i));
             
             PuzzleHelper.shuffle(this.puzzle.list);
@@ -82,11 +78,11 @@
                     break;
                 
                 case this.checkMoveTop(payload):
-                    position = currentId - PUZZLE_ELEMENTS_IN_ROW;
+                    position = currentId - SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
                 case this.checkMoveBottom(payload):
-                    position = currentId + PUZZLE_ELEMENTS_IN_ROW;
+                    position = currentId + SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
                 default:
@@ -99,28 +95,30 @@
         checkMoveRight(payload) {
             let clicked = this.buildClickedObject(payload);
             let isRightElement = this.checkRightElement(payload);
-            let isRightBorderReached = clicked.model.position.left + PUZZLE_ELEMENT_SIZE > PUZZLE_CONTAINER_SIZE;
+            let puzzleContainerSize = SETTINGS.PUZZLE_ELEMENT_SIZE * (SETTINGS.PUZZLE_ELEMENTS_IN_ROW - 1);
+            let isRightBorderReached = clicked.model.position.left + SETTINGS.PUZZLE_ELEMENT_SIZE > puzzleContainerSize;
             return !isRightElement && !isRightBorderReached;
         }
         
         checkMoveLeft(payload) {
             let clicked = this.buildClickedObject(payload);
             let isPreviousElement = this.checkLeftElement(payload);
-            let isLeftBorderReached = clicked.model.position.left - PUZZLE_ELEMENT_SIZE < 0;
+            let isLeftBorderReached = clicked.model.position.left - SETTINGS.PUZZLE_ELEMENT_SIZE < 0;
             return !isPreviousElement && !isLeftBorderReached;
         }
         
         checkMoveTop(payload) {
             let clicked = this.buildClickedObject(payload);
             let isTopElement = this.checkTopElement(payload);
-            let isTopBorderReached = clicked.model.position.top - PUZZLE_ELEMENT_SIZE < 0;
+            let isTopBorderReached = clicked.model.position.top - SETTINGS.PUZZLE_ELEMENT_SIZE < 0;
             return !isTopElement && !isTopBorderReached;
         }
         
         checkMoveBottom(payload) {
             let clicked = this.buildClickedObject(payload);
             let isBottomElement = this.checkBottomElement(payload);
-            let isBottomBorderReached = clicked.model.position.top + PUZZLE_ELEMENT_SIZE > PUZZLE_CONTAINER_SIZE;
+            let puzzleContainerSize = SETTINGS.PUZZLE_ELEMENT_SIZE * (SETTINGS.PUZZLE_ELEMENTS_IN_ROW - 1);
+            let isBottomBorderReached = clicked.model.position.top + SETTINGS.PUZZLE_ELEMENT_SIZE > puzzleContainerSize;
             return !isBottomElement && !isBottomBorderReached;
         }
         
@@ -128,7 +126,7 @@
             let clicked = this.buildClickedObject(payload);
             return this.puzzle.list.find((el) => {
                 let isTopEqual = el.position.top === clicked.model.position.top;
-                let isRight = el.position.left === clicked.model.position.left + PUZZLE_ELEMENT_SIZE;
+                let isRight = el.position.left === clicked.model.position.left + SETTINGS.PUZZLE_ELEMENT_SIZE;
                 return Boolean(isTopEqual && isRight);
             });
         }
@@ -137,7 +135,7 @@
             let clicked = this.buildClickedObject(payload);
             return this.puzzle.list.find((el) => {
                 let isTopEqual = el.position.top === clicked.model.position.top;
-                let isLeft = el.position.left === clicked.model.position.left - PUZZLE_ELEMENT_SIZE;
+                let isLeft = el.position.left === clicked.model.position.left - SETTINGS.PUZZLE_ELEMENT_SIZE;
                 return Boolean(isTopEqual && isLeft);
             });
         }
@@ -146,7 +144,7 @@
             let clicked = this.buildClickedObject(payload);
             return this.puzzle.list.find((el) => {
                 let isLeftEqual = el.position.left === clicked.model.position.left;
-                let isTop = el.position.top === clicked.model.position.top - PUZZLE_ELEMENT_SIZE;
+                let isTop = el.position.top === clicked.model.position.top - SETTINGS.PUZZLE_ELEMENT_SIZE;
                 return Boolean(isLeftEqual && isTop);
             });
         }
@@ -155,7 +153,7 @@
             let clicked = this.buildClickedObject(payload);
             return this.puzzle.list.find((el) => {
                 let isLeftEqual = el.position.left === clicked.model.position.left;
-                let isBottom = el.position.top === clicked.model.position.top + PUZZLE_ELEMENT_SIZE;
+                let isBottom = el.position.top === clicked.model.position.top + SETTINGS.PUZZLE_ELEMENT_SIZE;
                 return Boolean(isLeftEqual && isBottom);
             });
         }

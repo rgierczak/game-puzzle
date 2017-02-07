@@ -1,7 +1,7 @@
 (function (root) {
     'use strict';
     
-    const PUZZLE_ELEMENT_SIZE = 30;
+    let SETTINGS = root.puzzle.settings;
     let DOMHelper = root.puzzle.helpers.DOMHelper;
     
     class PuzzleElementView {
@@ -27,8 +27,10 @@
         }
         
         setElementStyle() {
-            this.template.style.width = PUZZLE_ELEMENT_SIZE - 3 + 'px';
-            this.template.style.height = PUZZLE_ELEMENT_SIZE - 3 + 'px';
+            this.template.style.width = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
+            this.template.style.height = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
+            this.template.style.lineHeight = SETTINGS.PUZZLE_ELEMENT_SIZE + 'px';
+            this.template.style.fontSize = SETTINGS.PUZZLE_ELEMENT_SIZE / 3 + 'px';
             this.template.style.left = this.model.position.left + 'px';
             this.template.style.top = this.model.position.top + 'px';
         }
@@ -59,5 +61,3 @@
     
     root.puzzle.views.PuzzleElementView = PuzzleElementView;
 })(window);
-
-

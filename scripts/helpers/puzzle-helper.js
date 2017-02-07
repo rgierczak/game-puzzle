@@ -17,7 +17,5 @@
         }
     };
     
-    root.puzzle.helpers.PuzzleHelper = PuzzleHelper;    
+    root.puzzle.helpers.PuzzleHelper = PuzzleHelper;
 })(window);
-
-

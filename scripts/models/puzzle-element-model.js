@@ -1,7 +1,7 @@
 (function (root) {
     'use strict';
     
-    const PUZZLE_ELEMENT_SIZE = 30;
+    let SETTINGS = root.puzzle.settings;
     
     class PuzzleElementModel {
         constructor(id) {
@@ -22,11 +22,11 @@
         }
     
         setTopPosition(id) {
-            return PUZZLE_ELEMENT_SIZE * Math.floor(id / 4);
+            return SETTINGS.PUZZLE_ELEMENT_SIZE * Math.floor(id / 4);
         }
     
         setLeftPosition(id) {
-            return PUZZLE_ELEMENT_SIZE * (id % 4);
+            return SETTINGS.PUZZLE_ELEMENT_SIZE * (id % 4);
         }
     }
     
