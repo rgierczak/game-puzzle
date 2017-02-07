@@ -23,7 +23,7 @@
         buildTemplate() {
             this.template = document.createElement('div');
             this.template.setAttribute('class', 'element');
-            this.template.setAttribute('data-id', this.model.id);
+            this.template.setAttribute('data-id', this.model.position.currentId);
         }
     
         setElementStyle() {
@@ -34,7 +34,7 @@
         }
         
         setElementText() {
-            this.template.innerText = this.model.id;
+            this.template.innerText = this.model.originId;
         }
     
         render() {

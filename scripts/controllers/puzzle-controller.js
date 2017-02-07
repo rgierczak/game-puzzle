@@ -4,7 +4,7 @@
     const PUZZLE_ELEMENT_SIZE = 30;
     const PUZZLE_ELEMENTS_AMOUNT = 16;
     const PUZZLE_ELEMENTS_IN_ROW = 4;
-    const PUZZLE_CONTAINER_SIZE =  PUZZLE_ELEMENT_SIZE * (PUZZLE_ELEMENTS_IN_ROW - 1);
+    const PUZZLE_CONTAINER_SIZE = PUZZLE_ELEMENT_SIZE * (PUZZLE_ELEMENTS_IN_ROW - 1);
     
     let PuzzleHelper = root.puzzle.helpers.PuzzleHelper;
     let PuzzleListModel = root.puzzle.models.PuzzleListModel;
@@ -28,40 +28,47 @@
                 this.puzzle.addPuzzleElement(new PuzzleElementModel(i));
             
             PuzzleHelper.shuffle(this.puzzle.list);
-    
+            
             this.puzzle.setElementPosition((element) => {
                 new PuzzleElementView(element);
             });
         }
         
         setupListeners() {
-            document.addEventListener('puzzle:click', (event) => this.clickHandler(event));
+            document.addEventListener('puzzle:click', (event) => this.getMovementDirection(event.detail, this.move));
         }
         
-        clickHandler(event) {
-            let direction = this.getMovementDirection(event.detail);
-            console.log('element: ', event.detail, 'direction: ', direction);
+        move(direction) {
+            console.log('dir: ', direction);
         }
-    
-        getMovementDirection(clickedId) {
+        
+        getMovementDirection(clickedId, callback) {
             this.clicked = this.puzzle.list.find((element) => {
-                return element.id === Number(clickedId);
+                return element.position.currentId === Number(clickedId);
             });
             
-            switch(true) {
+            switch (true) {
                 case this.checkMoveRight():
-                    return 'right';
+                    callback('right');
+                    break;
+                
                 case this.checkMoveLeft():
-                    return 'left';
+                    callback('left');
+                    break;
+                
                 case this.checkMoveTop():
-                    return 'top';
+                    callback('top');
+                    break;
+                
                 case this.checkMoveBottom():
-                    return 'bottom';
+                    callback('bottom');
+                    break;
+                
                 default:
                     return null;
             }
         }
-    
+        
         checkMoveRight() {
             let isRightElement = this.checkRightElement();
             let isRightBorderReached = this.clicked.position.left + PUZZLE_ELEMENT_SIZE > PUZZLE_CONTAINER_SIZE;
@@ -73,19 +80,19 @@
             let isLeftBorderReached = this.clicked.position.left - PUZZLE_ELEMENT_SIZE < 0;
             return !isPreviousElement && !isLeftBorderReached;
         }
-    
+        
         checkMoveTop() {
             let isTopElement = this.checkTopElement();
             let isTopBorderReached = this.clicked.position.top - PUZZLE_ELEMENT_SIZE < 0;
             return !isTopElement && !isTopBorderReached;
         }
-    
+        
         checkMoveBottom() {
             let isBottomElement = this.checkBottomElement();
             let isBottomBorderReached = this.clicked.position.top + PUZZLE_ELEMENT_SIZE > PUZZLE_CONTAINER_SIZE;
             return !isBottomElement && !isBottomBorderReached;
         }
-    
+        
         checkRightElement() {
             return this.puzzle.list.find((el) => {
                 let isTopEqual = el.position.top === this.clicked.position.top;
@@ -93,7 +100,7 @@
                 return Boolean(isTopEqual && isRight);
             });
         }
-    
+        
         checkLeftElement() {
             return this.puzzle.list.find((el) => {
                 let isTopEqual = el.position.top === this.clicked.position.top;
@@ -109,7 +116,7 @@
                 return Boolean(isLeftEqual && isTop);
             });
         }
-    
+        
         checkBottomElement() {
             return this.puzzle.list.find((el) => {
                 let isLeftEqual = el.position.left === this.clicked.position.left;

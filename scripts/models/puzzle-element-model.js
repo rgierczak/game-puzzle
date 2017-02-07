@@ -5,8 +5,9 @@
     
     class PuzzleElementModel {
         constructor(id) {
-            this.id = id;
+            this.originId = id;
             this.position = {
+                currentId: id,
                 left: null,
                 top: null
             };
@@ -14,6 +15,7 @@
         
         setPosition(id) {
             this.position = {
+                currentId: id,
                 left: this.setLeftPosition(id),
                 top: this.setTopPosition(id)
             }
