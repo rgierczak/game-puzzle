@@ -10,10 +10,10 @@ body {
 }
 
 .element {
-    color: #ffffff;
+    color: #25ff2d;
     text-align: center;
     cursor: pointer;
-    background-color: #018aff;
+    background-color: #ff211e;
     position: absolute;
     border: solid 3px #ffffff;
 }

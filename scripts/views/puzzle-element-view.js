@@ -6,6 +6,7 @@
     
     class PuzzleElementView {
         constructor(model) {
+            this.originId = model.originId;
             this.template = null;
             
             this.display(model);
@@ -56,7 +57,7 @@
             let dto = {
                 detail: {
                     currentId: event.target.dataset.id,
-                    template: this.template
+                    originId: this.originId
                 }
             };
             document.dispatchEvent(new CustomEvent('puzzle:click', dto));

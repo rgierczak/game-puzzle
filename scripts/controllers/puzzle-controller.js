@@ -51,13 +51,7 @@
                 template: payload.template
             };
         }
-        
-        setClickedObjectProperties(clicked) {
-            clicked.template.style.left = clicked.model.position.left + 'px';
-            clicked.template.style.top = clicked.model.position.top + 'px';
-            clicked.template.setAttribute('data-id', clicked.model.position.currentId);
-        }
-        
+
         updateClickedElementPosition(payload, clicked) {
             this.puzzleModels.list.forEach((element) => {
                 if (element.position.currentId === Number(payload.currentId)) {
@@ -69,11 +63,13 @@
         setClickedElementPosition(payload, clicked, position) {
             clicked.model.setCurrentPosition(position);
             this.updateClickedElementPosition(payload, clicked);
-            this.setClickedObjectProperties(clicked);
          
-            // let puzzleElementView = this.puzzleViews.list.find((element, index) => {
-            //     return index === Number(payload.currentId);
-            // });
+            let puzzleElementView = this.puzzleViews.list.find((element) => {
+                return element.originId === Number(payload.originId);
+            });
+            
+            console.log('puzzleElementView: ', puzzleElementView);
+            puzzleElementView.setPosition(clicked.model);
         }
         
         getMovementDirection(event) {
