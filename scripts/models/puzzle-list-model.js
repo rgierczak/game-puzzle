@@ -21,10 +21,6 @@
             });
         }
         
-        find(callback) {
-            return this.list.find(callback);
-        }
-        
         findById(id) {
             return this.list.find((element) => {
                 return element.getPosition('currentId') === Number(id);

@@ -6,51 +6,47 @@
     
     class PuzzleElementView {
         constructor(model) {
-            this.originId = model.originId;
-            this.template = null;
-            
-            this.display(model);
-            this.setupListeners();
-        }
-        
-        display(model) {
+            this.$template = null;
+            this.originId = model.getOriginId();
+    
             this.buildTemplate();
             this.setStyle();
             this.setPosition(model);
             this.setText(model);
             this.render();
+            this.setupListeners();
         }
-        
-        buildTemplate() {
-            this.template = document.createElement('div');
-            this.template.setAttribute('class', 'element');
 
+        buildTemplate() {
+            this.$template = document.createElement('div');
+            this.$template.setAttribute('class', 'element');
         }
         
         setPosition(model) {
-            this.template.style.left = model.position.left + 'px';
-            this.template.style.top = model.position.top + 'px';
-            this.template.setAttribute('data-id', model.position.currentId);
+            this.$template.style.left = model.getPosition('left') + 'px';
+            this.$template.style.top = model.getPosition('top') + 'px';
+            this.$template.setAttribute('data-id', model.getPosition('currentId'));
         }
         
         setStyle() {
-            this.template.style.width = SETTINGS.ELEMENT_SIZE - 3 + 'px';
-            this.template.style.height = SETTINGS.ELEMENT_SIZE - 3 + 'px';
-            this.template.style.lineHeight = SETTINGS.ELEMENT_SIZE + 'px';
-            this.template.style.fontSize = SETTINGS.ELEMENT_SIZE / 3 + 'px';
+            this.$template.style.width = SETTINGS.ELEMENT_SIZE - SETTINGS.BORDER_SIZE + 'px';
+            this.$template.style.height = SETTINGS.ELEMENT_SIZE - SETTINGS.BORDER_SIZE + 'px';
+            this.$template.style.lineHeight = SETTINGS.ELEMENT_SIZE + 'px';
+            this.$template.style.fontSize = SETTINGS.ELEMENT_SIZE / SETTINGS.BORDER_SIZE + 'px';
+            this.$template.style.borderWidth = SETTINGS.BORDER_SIZE + 'px';
         }
         
         setText(model) {
-            this.template.innerText = model.originId;
+            this.$template.innerText = model.getOriginId();
         }
         
         render() {
             let $wrapper = document.getElementById('puzzle-wrapper');
-            DOMHelper.render($wrapper, this.template);
+            DOMHelper.render($wrapper, this.$template);
         }
         
         setupListeners() {
-            this.template.addEventListener('click', (event) => this.clickHandler(event));
+            this.$template.addEventListener('click', (event) => this.clickHandler(event));
         }
         
         clickHandler(event) {

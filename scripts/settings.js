@@ -10,7 +10,8 @@
             RIGHT: 'right',
             TOP: 'top',
             BOTTOM: 'bottom'
-        }
+        },
+        BORDER_SIZE: 3
     };
     
     root.puzzle.settings = settings;

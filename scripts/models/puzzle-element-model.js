@@ -7,7 +7,7 @@
         constructor(id) {
             this.originId = id;
             this.position = {
-                currentId: id,
+                currentId: null,
                 left: null,
                 top: null
             };
