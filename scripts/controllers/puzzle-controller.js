@@ -83,62 +83,36 @@
         }
         
         checkMoveRight(id) {
-            let leftPosition = this.getModelPosition(id, 'left');
-            let isRightBorderReached = leftPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
-            return !this.isRightElement(id) && !isRightBorderReached;
+            let rightElementId = Number(id) + 1;
+            let leftElementPosition = this.getModelPosition(id, 'left');
+            let isRightBorderReached = leftElementPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
+            return !this.isNextElement(rightElementId) && !isRightBorderReached;
         }
         
         checkMoveLeft(id) {
-            let leftPosition = this.getModelPosition(id, 'left');
-            let isLeftBorderReached = leftPosition - SETTINGS.ELEMENT_SIZE < 0;
-            return !this.isLeftElement(id) && !isLeftBorderReached;
+            let leftElementId = Number(id) - 1;
+            let leftElementPosition = this.getModelPosition(id, 'left');
+            let isLeftBorderReached = leftElementPosition - SETTINGS.ELEMENT_SIZE < 0;
+            return !this.isNextElement(leftElementId) && !isLeftBorderReached;
         }
         
         checkMoveTop(id) {
-            let topPosition = this.getModelPosition(id, 'top');
-            let isTopBorderReached = topPosition - SETTINGS.ELEMENT_SIZE < 0;
-            return !this.isTopElement(id) && !isTopBorderReached;
+            let topElementId = Number(id) - SETTINGS.ELEMENTS_IN_ROW;
+            let topElementPosition = this.getModelPosition(id, 'top');
+            let isTopBorderReached = topElementPosition - SETTINGS.ELEMENT_SIZE < 0;
+            return !this.isNextElement(topElementId) && !isTopBorderReached;
         }
         
         checkMoveBottom(id) {
-            let topPosition = this.getModelPosition(id, 'top');
-            let isBottomBorderReached = topPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
-            return !this.isBottomElement(id) && !isBottomBorderReached;
+            let bottomElementId = Number(id) + SETTINGS.ELEMENTS_IN_ROW;
+            let topElementPosition = this.getModelPosition(id, 'top');
+            let isBottomBorderReached = topElementPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
+            return !this.isNextElement(bottomElementId) && !isBottomBorderReached;
         }
-        
-        isRightElement(id) {
-            let model = this.puzzleModels.findById(id);
-            return this.puzzleModels.find((el) => {
-                let isTopEqual = PuzzleHelper.isPositionEqual(el, model, 'top');
-                let isRight = el.getPosition('left') === model.getPosition('left') + SETTINGS.ELEMENT_SIZE;
-                return Boolean(isTopEqual && isRight);
-            });
-        }
-        
-        isLeftElement(id) {
-            let model = this.puzzleModels.findById(id);
-            return this.puzzleModels.find((el) => {
-                let isTopEqual = PuzzleHelper.isPositionEqual(el, model, 'top');
-                let isLeft = el.getPosition('left') === model.getPosition('left') - SETTINGS.ELEMENT_SIZE;
-                return Boolean(isTopEqual && isLeft);
-            });
-        }
-        
-        isTopElement(id) {
-            let model = this.puzzleModels.findById(id);
-            return this.puzzleModels.find((el) => {
-                let isLeftEqual = PuzzleHelper.isPositionEqual(el, model, 'left');
-                let isTop = el.getPosition('top') === model.getPosition('top') - SETTINGS.ELEMENT_SIZE;
-                return Boolean(isLeftEqual && isTop);
-            });
-        }
-        
-        isBottomElement(id) {
-            let model = this.puzzleModels.findById(id);
-            return this.puzzleModels.find((el) => {
-                let isLeftEqual = PuzzleHelper.isPositionEqual(el, model, 'left');
-                let isBottom = el.getPosition('top') === model.getPosition('top') + SETTINGS.ELEMENT_SIZE;
-                return Boolean(isLeftEqual && isBottom);
+    
+        isNextElement(id) {
+            return this.puzzleModels.list.find((element) => {
+                return Boolean(element.position.currentId == id);
             });
         }
     }
