@@ -9,11 +9,11 @@
         },
     
         setTopPosition(id) {
-            return SETTINGS.ELEMENT_SIZE * Math.floor(id / 4);
+            return SETTINGS.STYLE.ELEMENT_SIZE * Math.floor(id / 4);
         },
     
         setLeftPosition(id) {
-            return SETTINGS.ELEMENT_SIZE * (id % 4);
+            return SETTINGS.STYLE.ELEMENT_SIZE * (id % 4);
         }
     };
     

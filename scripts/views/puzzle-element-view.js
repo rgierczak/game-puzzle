@@ -29,11 +29,11 @@
         }
         
         setStyle() {
-            this.$template.style.width = SETTINGS.ELEMENT_SIZE - SETTINGS.BORDER_SIZE + 'px';
-            this.$template.style.height = SETTINGS.ELEMENT_SIZE - SETTINGS.BORDER_SIZE + 'px';
-            this.$template.style.lineHeight = SETTINGS.ELEMENT_SIZE + 'px';
-            this.$template.style.fontSize = SETTINGS.ELEMENT_SIZE / SETTINGS.BORDER_SIZE + 'px';
-            this.$template.style.borderWidth = SETTINGS.BORDER_SIZE + 'px';
+            this.$template.style.width = SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE + 'px';
+            this.$template.style.height = SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE + 'px';
+            this.$template.style.lineHeight = SETTINGS.STYLE.ELEMENT_SIZE + 'px';
+            this.$template.style.fontSize = SETTINGS.STYLE.ELEMENT_SIZE / SETTINGS.STYLE.BORDER_SIZE + 'px';
+            this.$template.style.borderWidth = SETTINGS.STYLE.BORDER_SIZE + 'px';
         }
         
         setText(model) {
@@ -56,7 +56,8 @@
                     originId: this.originId
                 }
             };
-            document.dispatchEvent(new CustomEvent('element-view:click', payload));
+
+            document.dispatchEvent(new CustomEvent(SETTINGS.EVENTS.ELEMENT.CLICK, payload));
         }
     }
     

@@ -8,9 +8,7 @@
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
     let PuzzleListView = root.puzzle.views.PuzzleListView;
     
-    const CONTAINER_SIZE = SETTINGS.ELEMENT_SIZE * (SETTINGS.ELEMENTS_IN_ROW - 1);
-    const LEFT = SETTINGS.POSITIONS.LEFT;
-    const TOP = SETTINGS.POSITIONS.TOP;
+    const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
     
     class PuzzleController {
         constructor() {
@@ -25,7 +23,7 @@
     
         buildPuzzleModels() {
             this.puzzleModels = new PuzzleListModel();
-            for (let i = 0; i < SETTINGS.ELEMENTS_AMOUNT - 1; i++)
+            for (let i = 0; i < SETTINGS.STYLE.ELEMENTS_AMOUNT - 1; i++)
                 this.puzzleModels.add(new PuzzleElementModel(i));
         }
         
@@ -39,7 +37,7 @@
         }
         
         setupListeners() {
-            document.addEventListener('element-view:click', (dto) => this.getMovementDirection(dto));
+            document.addEventListener(SETTINGS.EVENTS.ELEMENT.CLICK, (dto) => this.getMovementDirection(dto));
         }
         
         setClickedElementPosition(model, position) {
@@ -66,11 +64,11 @@
                     break;
                 
                 case this.checkMoveTop(id):
-                    position = currentId - SETTINGS.ELEMENTS_IN_ROW;
+                    position = currentId - SETTINGS.STYLE.ELEMENTS_IN_ROW;
                     break;
                 
                 case this.checkMoveBottom(id):
-                    position = currentId + SETTINGS.ELEMENTS_IN_ROW;
+                    position = currentId + SETTINGS.STYLE.ELEMENTS_IN_ROW;
                     break;
                 
                 default:
@@ -86,29 +84,29 @@
         
         checkMoveRight(id) {
             let rightElementId = Number(id) + 1;
-            let leftElementPosition = this.getModelPosition(id, LEFT);
-            let isRightBorderReached = leftElementPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
+            let leftElementPosition = this.getModelPosition(id, SETTINGS.POSITIONS.LEFT);
+            let isRightBorderReached = leftElementPosition + SETTINGS.STYLE.ELEMENT_SIZE > CONTAINER_SIZE;
             return !this.isNextElement(rightElementId) && !isRightBorderReached;
         }
         
         checkMoveLeft(id) {
             let leftElementId = Number(id) - 1;
-            let leftElementPosition = this.getModelPosition(id, LEFT);
-            let isLeftBorderReached = leftElementPosition - SETTINGS.ELEMENT_SIZE < 0;
+            let leftElementPosition = this.getModelPosition(id, SETTINGS.POSITIONS.LEFT);
+            let isLeftBorderReached = leftElementPosition - SETTINGS.STYLE.ELEMENT_SIZE < 0;
             return !this.isNextElement(leftElementId) && !isLeftBorderReached;
         }
         
         checkMoveTop(id) {
-            let topElementId = Number(id) - SETTINGS.ELEMENTS_IN_ROW;
-            let topElementPosition = this.getModelPosition(id, TOP);
-            let isTopBorderReached = topElementPosition - SETTINGS.ELEMENT_SIZE < 0;
+            let topElementId = Number(id) - SETTINGS.STYLE.ELEMENTS_IN_ROW;
+            let topElementPosition = this.getModelPosition(id, SETTINGS.POSITIONS.TOP);
+            let isTopBorderReached = topElementPosition - SETTINGS.STYLE.ELEMENT_SIZE < 0;
             return !this.isNextElement(topElementId) && !isTopBorderReached;
         }
         
         checkMoveBottom(id) {
-            let bottomElementId = Number(id) + SETTINGS.ELEMENTS_IN_ROW;
-            let topElementPosition = this.getModelPosition(id, TOP);
-            let isBottomBorderReached = topElementPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
+            let bottomElementId = Number(id) + SETTINGS.STYLE.ELEMENTS_IN_ROW;
+            let topElementPosition = this.getModelPosition(id, SETTINGS.POSITIONS.TOP);
+            let isBottomBorderReached = topElementPosition + SETTINGS.STYLE.ELEMENT_SIZE > CONTAINER_SIZE;
             return !this.isNextElement(bottomElementId) && !isBottomBorderReached;
         }
     
