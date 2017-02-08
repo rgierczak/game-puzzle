@@ -54,13 +54,13 @@
         }
         
         clickHandler(event) {
-            let dto = {
+            let payload = {
                 detail: {
                     currentId: event.target.dataset.id,
                     originId: this.originId
                 }
             };
-            document.dispatchEvent(new CustomEvent('element-view:click', dto));
+            document.dispatchEvent(new CustomEvent('element-view:click', payload));
         }
     }
     

@@ -14,10 +14,7 @@
         constructor() {
             this.puzzleModels = null;
             this.puzzleViews = null;
-            this.setup();
-        }
-        
-        setup() {
+    
             this.buildPuzzleModels();
             this.shufflePuzzleModels();
             this.buildPuzzleViews();
@@ -36,57 +33,41 @@
         
         buildPuzzleViews() {
             this.puzzleViews = new PuzzleListView();
-            this.puzzleModels.setPosition((element) => {
-                this.puzzleViews.add(new PuzzleElementView(element));
-            });
+            this.puzzleModels.setPosition((model) => this.puzzleViews.add(new PuzzleElementView(model)));
         }
         
         setupListeners() {
-            document.addEventListener('element-view:click', (event) => this.getMovementDirection(event));
+            document.addEventListener('element-view:click', (dto) => this.getMovementDirection(dto));
         }
         
-        updateClickedElementPosition(payload, model) {
-            this.puzzleModels.each((element) => {
-                if (element.position.currentId === Number(payload.currentId))
-                    element.position = model.position;
-            });
-        }
-        
-        setClickedElementPosition(payload, model, position) {
+        setClickedElementPosition(model, position) {
             model.setPosition(position);
-            this.updateClickedElementPosition(payload, model);
             
-            let puzzleElementView = this.getPuzzleElementView(payload);
-            puzzleElementView.setPosition(model);
-        }
-    
-        getPuzzleElementView(payload) {
-            return this.puzzleViews.list.find((element) => {
-                return element.originId === Number(payload.originId);
-            });
+            this.puzzleViews
+                .findById(model.originId)
+                .setPosition(model);
         }
         
-        getMovementDirection(event) {
+        getMovementDirection(dto) {
             let position = null;
-            let payload = event.detail;
-            let payloadId = payload.currentId;
-            let model = this.puzzleModels.findById(payloadId);
+            let id = dto.detail.currentId;
+            let model = this.puzzleModels.findById(id);
             let currentId = model.position.currentId;
             
             switch (true) {
-                case this.checkMoveRight(payloadId):
+                case this.checkMoveRight(id):
                     position = currentId + 1;
                     break;
                 
-                case this.checkMoveLeft(payloadId):
+                case this.checkMoveLeft(id):
                     position = currentId - 1;
                     break;
                 
-                case this.checkMoveTop(payloadId):
+                case this.checkMoveTop(id):
                     position = currentId - SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
-                case this.checkMoveBottom(payloadId):
+                case this.checkMoveBottom(id):
                     position = currentId + SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
                     break;
                 
@@ -94,7 +75,7 @@
                     return null;
             }
             
-            this.setClickedElementPosition(payload, model, position);
+            this.setClickedElementPosition(model, position);
         }
         
         checkMoveRight(id) {

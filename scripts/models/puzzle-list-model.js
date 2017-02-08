@@ -26,10 +26,6 @@
                 return element.position.currentId === Number(id);
             });
         }
-        
-        each(callback) {
-            this.list.forEach(callback);
-        }
     }
     
     root.puzzle.models.PuzzleListModel = PuzzleListModel;
