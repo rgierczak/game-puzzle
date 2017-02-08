@@ -8,7 +8,7 @@
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
     let PuzzleListView = root.puzzle.views.PuzzleListView;
     
-    const PUZZLE_CONTAINER_SIZE = SETTINGS.PUZZLE_ELEMENT_SIZE * (SETTINGS.PUZZLE_ELEMENTS_IN_ROW - 1);
+    const CONTAINER_SIZE = SETTINGS.ELEMENT_SIZE * (SETTINGS.ELEMENTS_IN_ROW - 1);
     
     class PuzzleController {
         constructor() {
@@ -23,7 +23,7 @@
     
         buildPuzzleModels() {
             this.puzzleModels = new PuzzleListModel();
-            for (let i = 0; i < SETTINGS.PUZZLE_ELEMENTS_AMOUNT - 1; i++)
+            for (let i = 0; i < SETTINGS.ELEMENTS_AMOUNT - 1; i++)
                 this.puzzleModels.add(new PuzzleElementModel(i));
         }
         
@@ -64,11 +64,11 @@
                     break;
                 
                 case this.checkMoveTop(id):
-                    position = currentId - SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
+                    position = currentId - SETTINGS.ELEMENTS_IN_ROW;
                     break;
                 
                 case this.checkMoveBottom(id):
-                    position = currentId + SETTINGS.PUZZLE_ELEMENTS_IN_ROW;
+                    position = currentId + SETTINGS.ELEMENTS_IN_ROW;
                     break;
                 
                 default:
@@ -78,66 +78,66 @@
             this.setClickedElementPosition(model, position);
         }
         
+        getModelPosition(id, direction) {
+            return this.puzzleModels.findById(id).getPosition(direction);
+        }
+        
         checkMoveRight(id) {
-            let model = this.puzzleModels.findById(id);
-            let isRightElement = this.checkRightElement(id);
-            let isRightBorderReached = model.position.left + SETTINGS.PUZZLE_ELEMENT_SIZE > PUZZLE_CONTAINER_SIZE;
-            return !isRightElement && !isRightBorderReached;
+            let leftPosition = this.getModelPosition(id, 'left');
+            let isRightBorderReached = leftPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
+            return !this.isRightElement(id) && !isRightBorderReached;
         }
         
         checkMoveLeft(id) {
-            let model = this.puzzleModels.findById(id);
-            let isPreviousElement = this.checkLeftElement(id);
-            let isLeftBorderReached = model.position.left - SETTINGS.PUZZLE_ELEMENT_SIZE < 0;
-            return !isPreviousElement && !isLeftBorderReached;
+            let leftPosition = this.getModelPosition(id, 'left');
+            let isLeftBorderReached = leftPosition - SETTINGS.ELEMENT_SIZE < 0;
+            return !this.isLeftElement(id) && !isLeftBorderReached;
         }
         
         checkMoveTop(id) {
-            let model = this.puzzleModels.findById(id);
-            let isTopElement = this.checkTopElement(id);
-            let isTopBorderReached = model.position.top - SETTINGS.PUZZLE_ELEMENT_SIZE < 0;
-            return !isTopElement && !isTopBorderReached;
+            let topPosition = this.getModelPosition(id, 'top');
+            let isTopBorderReached = topPosition - SETTINGS.ELEMENT_SIZE < 0;
+            return !this.isTopElement(id) && !isTopBorderReached;
         }
         
         checkMoveBottom(id) {
-            let model = this.puzzleModels.findById(id);
-            let isBottomElement = this.checkBottomElement(id);
-            let isBottomBorderReached = model.position.top + SETTINGS.PUZZLE_ELEMENT_SIZE > PUZZLE_CONTAINER_SIZE;
-            return !isBottomElement && !isBottomBorderReached;
+            let topPosition = this.getModelPosition(id, 'top');
+            let isBottomBorderReached = topPosition + SETTINGS.ELEMENT_SIZE > CONTAINER_SIZE;
+            return !this.isBottomElement(id) && !isBottomBorderReached;
         }
         
-        checkRightElement(id) {
+        isRightElement(id) {
             let model = this.puzzleModels.findById(id);
             return this.puzzleModels.find((el) => {
-                let isTopEqual = el.position.top === model.position.top;
-                let isRight = el.position.left === model.position.left + SETTINGS.PUZZLE_ELEMENT_SIZE;
+                let isTopEqual = PuzzleHelper.isPositionEqual(el, model, 'top');
+                let isRight = el.getPosition('left') === model.getPosition('left') + SETTINGS.ELEMENT_SIZE;
                 return Boolean(isTopEqual && isRight);
             });
         }
         
-        checkLeftElement(id) {
+        isLeftElement(id) {
             let model = this.puzzleModels.findById(id);
             return this.puzzleModels.find((el) => {
-                let isTopEqual = el.position.top === model.position.top;
-                let isLeft = el.position.left === model.position.left - SETTINGS.PUZZLE_ELEMENT_SIZE;
+                let isTopEqual = PuzzleHelper.isPositionEqual(el, model, 'top');
+                let isLeft = el.getPosition('left') === model.getPosition('left') - SETTINGS.ELEMENT_SIZE;
                 return Boolean(isTopEqual && isLeft);
             });
         }
         
-        checkTopElement(id) {
+        isTopElement(id) {
             let model = this.puzzleModels.findById(id);
             return this.puzzleModels.find((el) => {
-                let isLeftEqual = el.position.left === model.position.left;
-                let isTop = el.position.top === model.position.top - SETTINGS.PUZZLE_ELEMENT_SIZE;
+                let isLeftEqual = PuzzleHelper.isPositionEqual(el, model, 'left');
+                let isTop = el.getPosition('top') === model.getPosition('top') - SETTINGS.ELEMENT_SIZE;
                 return Boolean(isLeftEqual && isTop);
             });
         }
         
-        checkBottomElement(id) {
+        isBottomElement(id) {
             let model = this.puzzleModels.findById(id);
             return this.puzzleModels.find((el) => {
-                let isLeftEqual = el.position.left === model.position.left;
-                let isBottom = el.position.top === model.position.top + SETTINGS.PUZZLE_ELEMENT_SIZE;
+                let isLeftEqual = PuzzleHelper.isPositionEqual(el, model, 'left');
+                let isBottom = el.getPosition('top') === model.getPosition('top') + SETTINGS.ELEMENT_SIZE;
                 return Boolean(isLeftEqual && isBottom);
             });
         }

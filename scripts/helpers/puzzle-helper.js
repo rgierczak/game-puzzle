@@ -14,6 +14,10 @@
             }
             
             return result;
+        },
+        
+        isPositionEqual(firstModel, secondModel, direction) {
+            return firstModel.getPosition(direction) === secondModel.getPosition(direction);
         }
     };
     

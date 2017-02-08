@@ -34,10 +34,10 @@
         }
         
         setStyle() {
-            this.template.style.width = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
-            this.template.style.height = SETTINGS.PUZZLE_ELEMENT_SIZE - 3 + 'px';
-            this.template.style.lineHeight = SETTINGS.PUZZLE_ELEMENT_SIZE + 'px';
-            this.template.style.fontSize = SETTINGS.PUZZLE_ELEMENT_SIZE / 3 + 'px';
+            this.template.style.width = SETTINGS.ELEMENT_SIZE - 3 + 'px';
+            this.template.style.height = SETTINGS.ELEMENT_SIZE - 3 + 'px';
+            this.template.style.lineHeight = SETTINGS.ELEMENT_SIZE + 'px';
+            this.template.style.fontSize = SETTINGS.ELEMENT_SIZE / 3 + 'px';
         }
         
         setText(model) {

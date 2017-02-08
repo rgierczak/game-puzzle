@@ -20,6 +20,10 @@
                 top: DOMHelper.setTopPosition(id)
             }
         }
+        
+        getPosition(property) {
+            return this.position[property];
+        }
     }
     
     root.puzzle.models.PuzzleElementModel = PuzzleElementModel;

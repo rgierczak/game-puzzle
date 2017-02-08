@@ -23,7 +23,7 @@
         
         findById(id) {
             return this.list.find((element) => {
-                return element.position.currentId === Number(id);
+                return element.getPosition('currentId') === Number(id);
             });
         }
     }
