@@ -24,6 +24,10 @@
         getPosition(property) {
             return this.position[property];
         }
+        
+        getOriginId() {
+            return this.originId;
+        }
     }
     
     root.puzzle.models.PuzzleElementModel = PuzzleElementModel;

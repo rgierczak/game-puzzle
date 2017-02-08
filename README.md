@@ -1,6 +1,6 @@
 # puzzle
 
-> :game: The numeric puzzle.
+> :video_game: The numeric puzzle.
 
 ## How to play ?
 
