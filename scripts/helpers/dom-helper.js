@@ -19,5 +19,3 @@
     
     root.puzzle.helpers.DOMHelper = DOMHelper;
 })(window);
-
-

@@ -14,13 +14,13 @@
         constructor() {
             this.puzzleModels = null;
             this.puzzleViews = null;
-    
+
             this.buildPuzzleModels();
             this.shufflePuzzleModels();
             this.buildPuzzleViews();
             this.setupListeners();
         }
-    
+        
         buildPuzzleModels() {
             this.puzzleModels = new PuzzleListModel();
             for (let i = 0; i < SETTINGS.STYLE.ELEMENTS_AMOUNT - 1; i++)
@@ -46,6 +46,17 @@
             this.puzzleViews
                 .findById(model.getOriginId())
                 .setPosition(model);
+            
+            this.checkResults();
+        }
+        
+        checkResults() {
+            let isEqual = this.puzzleModels.list.every((model) => {
+                return model.getOriginId() == model.getPosition('currentId');
+            });
+            
+            if (isEqual)
+                console.log('GAME OVER');
         }
         
         getMovementDirection(dto) {
@@ -109,7 +120,7 @@
             let isBottomBorderReached = topElementPosition + SETTINGS.STYLE.ELEMENT_SIZE > CONTAINER_SIZE;
             return !this.isNextElement(bottomElementId) && !isBottomBorderReached;
         }
-    
+        
         isNextElement(id) {
             return this.puzzleModels.list.find((element) => {
                 return Boolean(element.getPosition('currentId') == id);

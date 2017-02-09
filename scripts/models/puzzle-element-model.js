@@ -18,7 +18,7 @@
                 currentId: id,
                 left: DOMHelper.setLeftPosition(id),
                 top: DOMHelper.setTopPosition(id)
-            }
+            };
         }
         
         getPosition(property) {

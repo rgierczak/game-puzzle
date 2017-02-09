@@ -8,7 +8,7 @@
         constructor(model) {
             this.$template = null;
             this.originId = model.getOriginId();
-    
+
             this.buildTemplate();
             this.setStyle();
             this.setPosition(model);
@@ -56,7 +56,7 @@
                     originId: this.originId
                 }
             };
-
+            
             document.dispatchEvent(new CustomEvent(SETTINGS.EVENTS.ELEMENT.CLICK, payload));
         }
     }
