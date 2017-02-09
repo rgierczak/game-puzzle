@@ -56,7 +56,9 @@
                 }
             };
             
-            document.dispatchEvent(new CustomEvent(SETTINGS.EVENTS.ELEMENT.CLICK, payload));
+            $(document).trigger(SETTINGS.EVENTS.ELEMENT.CLICK, [payload]);
+            
+            // document.dispatchEvent(new CustomEvent(SETTINGS.EVENTS.ELEMENT.CLICK, payload));
         }
     }
     

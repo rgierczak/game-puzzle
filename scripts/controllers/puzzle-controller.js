@@ -37,7 +37,7 @@
         }
         
         setupListeners() {
-            document.addEventListener(SETTINGS.EVENTS.ELEMENT.CLICK, (dto) => this.getMovementDirection(dto));
+            $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.getMovementDirection(event, dto));
         }
         
         setClickedElementPosition(model, position) {
@@ -59,7 +59,7 @@
                 console.log('GAME OVER');
         }
         
-        getMovementDirection(dto) {
+        getMovementDirection(event, dto) {
             let position = null;
             let id = dto.detail.currentId;
             let model = this.puzzleModels.findById(id);
