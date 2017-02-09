@@ -5,7 +5,7 @@
     
     let DOMHelper = {
         render($wrapper, $element) {
-            $wrapper.appendChild($element);
+            $wrapper.append($element);
         },
     
         setTopPosition(id) {

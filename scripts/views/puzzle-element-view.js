@@ -18,35 +18,34 @@
         }
 
         buildTemplate() {
-            this.$template = document.createElement('div');
-            this.$template.setAttribute('class', 'element');
+            this.$template = $('<div>').addClass('element');
         }
         
         setPosition(model) {
-            this.$template.style.left = model.getPosition('left') + 'px';
-            this.$template.style.top = model.getPosition('top') + 'px';
-            this.$template.setAttribute('data-id', model.getPosition('currentId'));
+            this.$template.css('left', model.getPosition('left'));
+            this.$template.css('top', model.getPosition('top'));
+            this.$template.attr('data-id', model.getPosition('currentId'));
         }
         
         setStyle() {
-            this.$template.style.width = SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE + 'px';
-            this.$template.style.height = SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE + 'px';
-            this.$template.style.lineHeight = SETTINGS.STYLE.ELEMENT_SIZE + 'px';
-            this.$template.style.fontSize = SETTINGS.STYLE.ELEMENT_SIZE / SETTINGS.STYLE.BORDER_SIZE + 'px';
-            this.$template.style.borderWidth = SETTINGS.STYLE.BORDER_SIZE + 'px';
+            this.$template.css('width', SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE);
+            this.$template.css('height',SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE);
+            this.$template.css('lineHeight', SETTINGS.STYLE.ELEMENT_SIZE + 'px');
+            this.$template.css('fontSize', SETTINGS.STYLE.ELEMENT_SIZE / SETTINGS.STYLE.BORDER_SIZE);
+            this.$template.css('borderWidth', SETTINGS.STYLE.BORDER_SIZE);
         }
         
         setText(model) {
-            this.$template.innerText = model.getOriginId();
+            this.$template.text(model.getOriginId());
         }
         
         render() {
-            let $wrapper = document.getElementById('puzzle-wrapper');
+            let $wrapper = $('#puzzle-wrapper');
             DOMHelper.render($wrapper, this.$template);
         }
         
         setupListeners() {
-            this.$template.addEventListener('click', (event) => this.clickHandler(event));
+            this.$template.on('click', (event) => this.clickHandler(event));
         }
         
         clickHandler(event) {
