@@ -8,28 +8,42 @@
         constructor(model) {
             this.$template = null;
             this.originId = model.getOriginId();
-
+            
             this.buildTemplate();
             this.setStyle();
-            this.setPosition(model);
             this.setText(model);
             this.render();
+            this.move(model);
             this.setupListeners();
         }
-
+        
         buildTemplate() {
             this.$template = $('<div>').addClass('element');
         }
         
+        move(model) {
+            this.setPosition(model);
+            this.setCurrentId(model)
+        }
+        
         setPosition(model) {
-            this.$template.css('left', model.getPosition('left'));
-            this.$template.css('top', model.getPosition('top'));
+            this.$template.animate({
+                    left: model.getPosition('left'),
+                    top: model.getPosition('top')
+                }, {
+                    duration: 300,
+                    easing: "easeOutBack"
+                }
+            );
+        }
+        
+        setCurrentId(model) {
             this.$template.attr('data-id', model.getPosition('currentId'));
         }
         
         setStyle() {
             this.$template.css('width', SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE);
-            this.$template.css('height',SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE);
+            this.$template.css('height', SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE);
             this.$template.css('lineHeight', SETTINGS.STYLE.ELEMENT_SIZE + 'px');
             this.$template.css('fontSize', SETTINGS.STYLE.ELEMENT_SIZE / SETTINGS.STYLE.BORDER_SIZE);
             this.$template.css('borderWidth', SETTINGS.STYLE.BORDER_SIZE);
@@ -57,8 +71,6 @@
             };
             
             $(document).trigger(SETTINGS.EVENTS.ELEMENT.CLICK, [payload]);
-            
-            // document.dispatchEvent(new CustomEvent(SETTINGS.EVENTS.ELEMENT.CLICK, payload));
         }
     }
     

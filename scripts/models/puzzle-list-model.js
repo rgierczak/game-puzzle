@@ -15,9 +15,14 @@
         }
         
         setPosition(callback) {
+            let timeOffset = 200;
+            
             this.list.forEach((element, index) => {
-                element.setPosition(index);
-                callback(element);
+                setTimeout(() => {
+                    element.setPosition(index);
+                    callback(element);
+                }, 300 + timeOffset);
+                timeOffset += 100;
             });
         }
         

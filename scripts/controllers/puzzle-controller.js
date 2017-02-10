@@ -40,12 +40,12 @@
             $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.getMovementDirection(event, dto));
         }
         
-        setClickedElementPosition(model, position) {
-            model.setPosition(position);
+        setClickedElementPosition(model, id) {
+            model.setPosition(id);
             
             this.puzzleViews
                 .findById(model.getOriginId())
-                .setPosition(model);
+                .move(model);
             
             this.checkResults();
         }
@@ -60,33 +60,33 @@
         }
         
         getMovementDirection(event, dto) {
-            let position = null;
+            let positionId = null;
             let id = dto.detail.currentId;
             let model = this.puzzleModels.findById(id);
             let currentId = model.getPosition('currentId');
             
             switch (true) {
                 case this.checkMoveRight(id):
-                    position = currentId + 1;
+                    positionId = currentId + 1;
                     break;
                 
                 case this.checkMoveLeft(id):
-                    position = currentId - 1;
+                    positionId = currentId - 1;
                     break;
                 
                 case this.checkMoveTop(id):
-                    position = currentId - SETTINGS.STYLE.ELEMENTS_IN_ROW;
+                    positionId = currentId - SETTINGS.STYLE.ELEMENTS_IN_ROW;
                     break;
                 
                 case this.checkMoveBottom(id):
-                    position = currentId + SETTINGS.STYLE.ELEMENTS_IN_ROW;
+                    positionId = currentId + SETTINGS.STYLE.ELEMENTS_IN_ROW;
                     break;
                 
                 default:
                     return null;
             }
             
-            this.setClickedElementPosition(model, position);
+            this.setClickedElementPosition(model, positionId);
         }
         
         getModelPosition(id, direction) {
