@@ -16,7 +16,6 @@
             this.puzzleModels = null;
             this.puzzleViews = null;
             
-            this.destroyListeners();
             this.buildPuzzleModels();
             this.shufflePuzzleModels();
             this.buildPuzzleViews();
@@ -40,7 +39,7 @@
         
         setupListeners() {
             $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.getMovementDirection(event, dto));
-            $(document).on(SETTINGS.EVENTS.ELEMENT.MOVED, (event) => this.checkResults(event));
+            $(document).on(SETTINGS.EVENTS.ELEMENT.MOVED, (event) => this.checkGameStatus(event));
         }
         
         destroyListeners() {
@@ -56,13 +55,15 @@
                 .move(model, MOVEMENT_DURATION);
         }
         
-        checkResults() {
-            let isEqual = this.puzzleModels.list.every((model) => {
+        checkGameStatus() {
+            let isGameOver = this.puzzleModels.list.every((model) => {
                 return model.getOriginId() == model.getPosition('currentId');
             });
             
-            if (isEqual)
+            if (isGameOver) {
+                this.destroyListeners();
                 $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
+            }
         }
         
         getMovementDirection(event, dto) {
