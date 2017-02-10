@@ -7,6 +7,7 @@
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
     let PuzzleListView = root.puzzle.views.PuzzleListView;
+    const MOVEMENT_DURATION = 300;
     
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
     
@@ -38,6 +39,7 @@
         
         setupListeners() {
             $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.getMovementDirection(event, dto));
+            $(document).on(SETTINGS.EVENTS.ELEMENT.MOVED, (event) => this.checkResults(event));
         }
         
         setClickedElementPosition(model, id) {
@@ -45,9 +47,7 @@
             
             this.puzzleViews
                 .findById(model.getOriginId())
-                .move(model);
-            
-            this.checkResults();
+                .move(model, MOVEMENT_DURATION);
         }
         
         checkResults() {

@@ -6,9 +6,11 @@ body {
 }
 
 #puzzle-wrapper {
-    margin: 0 auto;
+    margin: 100px auto 0;
     padding: 0;
     height: auto;
+    width: auto;
+    position: relative;
 }
 
 .element {

@@ -3,6 +3,7 @@
     
     let SETTINGS = root.puzzle.settings;
     let DOMHelper = root.puzzle.helpers.DOMHelper;
+    const MOVEMENT_DURATION = 800;
     
     class PuzzleElementView {
         constructor(model) {
@@ -13,7 +14,7 @@
             this.setStyle();
             this.setText(model);
             this.render();
-            this.move(model);
+            this.move(model, MOVEMENT_DURATION);
             this.setupListeners();
         }
         
@@ -21,18 +22,21 @@
             this.$template = $('<div>').addClass('element');
         }
         
-        move(model) {
-            this.setPosition(model);
+        move(model, duration) {
+            this.setPosition(model, duration);
             this.setCurrentId(model)
         }
         
-        setPosition(model) {
+        setPosition(model, duration) {
             this.$template.animate({
                     left: model.getPosition('left'),
                     top: model.getPosition('top')
                 }, {
-                    duration: 300,
-                    easing: "easeOutBack"
+                    duration,
+                    easing: SETTINGS.STYLE.EASING_TYPE,
+                    complete: () => {
+                        $(document).trigger(SETTINGS.EVENTS.ELEMENT.MOVED);
+                    }
                 }
             );
         }

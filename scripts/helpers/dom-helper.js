@@ -14,6 +14,10 @@
     
         setLeftPosition(id) {
             return SETTINGS.STYLE.ELEMENT_SIZE * (id % 4);
+        },
+        
+        createDialogBody(message) {
+            return $('<p>' + message.body + '</p>');
         }
     };
     
