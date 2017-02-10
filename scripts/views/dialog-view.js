@@ -53,16 +53,12 @@
                         icons: {
                             primary: 'ui-icon-heart'
                         },
-                        click: () => {
+                        click: function() {
                             $(this).dialog('close');
                             $(document).trigger(SETTINGS.EVENTS.DIALOG.CLICKED_OK);
                         }
                     }
-                ],
-                hide: {
-                    effect: 'explode',
-                    duration: 1000
-                }
+                ]
             });
         }
     }
