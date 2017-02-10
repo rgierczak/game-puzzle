@@ -22,7 +22,9 @@
                 MOVED: 'element:moved'
             },
             DIALOG: {
-                OK: 'dialog:ok'
+                SHOW_OK: 'dialog:show-ok',
+                SHOW_GAME_OVER: 'dialog:show-game-over',
+                CLICKED_OK: 'dialog:clicked-ok'
             }
         },
         MESSAGES: {

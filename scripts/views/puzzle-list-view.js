@@ -7,7 +7,7 @@
         constructor() {
             this.list = [];
             
-            this.$template = $('#puzzle-wrapper');
+            this.$template = $('#puzzle-wrapper').empty();
             this.setStyle();
         }
         

@@ -13,7 +13,10 @@
                     'as fast as you can!' + '\<br/>\<br/>' + 'Good luck!'
                 };
             case 'game-over':
-                return SETTINGS.MESSAGES.GAME_OVER;
+                return {
+                    title: 'GAME OVER',
+                    body: 'Congratulations!'
+                };
             default:
                 return 'Unrecognized message type';
         }
@@ -33,7 +36,7 @@
     
         renderDialogBody(message) {
             let $body = DOMHelper.createDialogBody(message);
-            DOMHelper.render(this.$template, $body);
+            DOMHelper.html(this.$template, $body);
         }
     
         buildDialog(message) {
@@ -50,7 +53,7 @@
                         },
                         click: function () {
                             $(this).dialog('close');
-                            $(document).trigger(SETTINGS.EVENTS.DIALOG.OK);
+                            $(document).trigger(SETTINGS.EVENTS.DIALOG.CLICKED_OK);
                         }
                     }
                 ],

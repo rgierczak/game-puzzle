@@ -15,7 +15,8 @@
         constructor() {
             this.puzzleModels = null;
             this.puzzleViews = null;
-
+            
+            this.destroyListeners();
             this.buildPuzzleModels();
             this.shufflePuzzleModels();
             this.buildPuzzleViews();
@@ -42,6 +43,11 @@
             $(document).on(SETTINGS.EVENTS.ELEMENT.MOVED, (event) => this.checkResults(event));
         }
         
+        destroyListeners() {
+            $(document).off(SETTINGS.EVENTS.ELEMENT.CLICK);
+            $(document).off(SETTINGS.EVENTS.ELEMENT.MOVED);
+        }
+        
         setClickedElementPosition(model, id) {
             model.setPosition(id);
             
@@ -56,7 +62,7 @@
             });
             
             if (isEqual)
-                console.log('GAME OVER');
+                $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
         }
         
         getMovementDirection(event, dto) {

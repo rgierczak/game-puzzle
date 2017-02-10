@@ -4,8 +4,12 @@
     let SETTINGS = root.puzzle.settings;
     
     let DOMHelper = {
-        render($wrapper, $element) {
+        append($wrapper, $element) {
             $wrapper.append($element);
+        },
+    
+        html($wrapper, $element) {
+            $wrapper.html($element);
         },
     
         setTopPosition(id) {

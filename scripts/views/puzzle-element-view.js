@@ -59,7 +59,7 @@
         
         render() {
             let $wrapper = $('#puzzle-wrapper');
-            DOMHelper.render($wrapper, this.$template);
+            DOMHelper.append($wrapper, this.$template);
         }
         
         setupListeners() {
