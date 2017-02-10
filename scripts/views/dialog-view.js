@@ -3,6 +3,8 @@
     
     let DOMHelper = root.puzzle.helpers.DOMHelper;
     let SETTINGS = root.puzzle.settings;
+    const DIALOG_WIDTH = 400;
+    const DIALOG_HEIGHT = 300;
     
     function getMessage(messageType) {
         switch (messageType) {
@@ -42,8 +44,8 @@
         buildDialog(message) {
             this.$template.dialog({
                 title: message.title,
-                width: 400,
-                height: 300,
+                width: DIALOG_WIDTH,
+                height: DIALOG_HEIGHT,
                 resizable: false,
                 buttons: [
                     {
@@ -51,7 +53,7 @@
                         icons: {
                             primary: 'ui-icon-heart'
                         },
-                        click: function () {
+                        click: () => {
                             $(this).dialog('close');
                             $(document).trigger(SETTINGS.EVENTS.DIALOG.CLICKED_OK);
                         }

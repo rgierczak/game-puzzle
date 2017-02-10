@@ -1,6 +1,9 @@
 (function (root) {
     'use strict';
     
+    const TIMEOUT = 300;
+    const TIMEOUT_INCREMENT = 100;
+    
     class PuzzleListModel {
         constructor() {
             this.list = [];
@@ -15,14 +18,14 @@
         }
         
         setPosition(callback) {
-            let timeOffset = 200;
+            let timeOffset = TIMEOUT;
             
             this.list.forEach((element, index) => {
                 setTimeout(() => {
                     element.setPosition(index);
                     callback(element);
-                }, 300 + timeOffset);
-                timeOffset += 100;
+                }, timeOffset);
+                timeOffset += TIMEOUT_INCREMENT;
             });
         }
         
