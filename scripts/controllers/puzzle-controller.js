@@ -50,17 +50,31 @@
         setClickedElementPosition(model, id) {
             model.setPosition(id);
             
-            let view = this.puzzleViews.findByOrigin(model.getOriginId());
+            let view = this.getCurrentView(model);
             view.setCurrentId(model);
             view.animate(model, SETTINGS.STYLE.MOVEMENT_DURATION).then(() => {
                 console.log(model);
+                this.checkElementPosition(model);
                 this.checkGameStatus();
             });
         }
         
+        getCurrentView(model) {
+            return this.puzzleViews.findByOrigin(model.getOriginId());
+        }
+        
+        checkElementPosition(model) {
+            let view = this.getCurrentView(model);
+            let color = model.isOnTargetPosition() ? 
+                SETTINGS.STYLE.CORRECT_POSITION_COLOR : 
+                SETTINGS.STYLE.INCORRECT_POSITION_COLOR;
+            
+            view.setBackgroundColor(color);
+        }
+        
         checkGameStatus() {
             let isGameOver = this.puzzleModels.list.every((model) => {
-                return model.getOriginId() == model.getPosition('currentId');
+                return model.isOnTargetPosition();
             });
             
             if (isGameOver) {

@@ -3,14 +3,16 @@
     
     const SETTINGS = {
         STYLE: {
-            ELEMENT_SIZE: 120,
-            ELEMENTS_IN_ROW: 4,
+            ELEMENT_SIZE: 100,
+            ELEMENTS_IN_ROW: 3,
             BORDER_SIZE: 3,
             EASING_TYPE: 'easeOutBack',
-            MOVEMENT_DURATION: 50,
-            INIT_MOVEMENT_DURATION: 100,
+            MOVEMENT_DURATION: 100,
+            INIT_MOVEMENT_DURATION: 12,
             DIALOG_WIDTH: 400,
-            DIALOG_HEIGHT: 250
+            DIALOG_HEIGHT: 250,
+            CORRECT_POSITION_COLOR: '#00d025',
+            INCORRECT_POSITION_COLOR: '#018aff'
         },
         POSITIONS: {
             LEFT: 'left',

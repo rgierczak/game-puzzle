@@ -43,6 +43,10 @@
         setCurrentId(model) {
             this.$template.attr('data-id', model.getPosition('currentId'));
         }
+    
+        setBackgroundColor(color) {
+            this.$template.css('background-color', color);
+        }
         
         setStyle() {
             this.$template.css('width', SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE);

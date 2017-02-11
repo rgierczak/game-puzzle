@@ -28,6 +28,10 @@
         getOriginId() {
             return this.originId;
         }
+        
+        isOnTargetPosition() {
+            return this.getOriginId() == this.getPosition('currentId');
+        }
     }
     
     root.puzzle.models.PuzzleElementModel = PuzzleElementModel;
