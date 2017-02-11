@@ -1,9 +1,6 @@
 (function (root) {
     'use strict';
     
-    const TIMEOUT = 300;
-    const TIMEOUT_INCREMENT = 100;
-    
     class PuzzleListModel {
         constructor() {
             this.list = [];
@@ -18,18 +15,13 @@
         }
         
         setPosition(callback) {
-            let timeOffset = TIMEOUT;
-            
             this.list.forEach((element, index) => {
-                setTimeout(() => {
-                    element.setPosition(index);
-                    callback(element);
-                }, timeOffset);
-                timeOffset += TIMEOUT_INCREMENT;
+                element.setPosition(index);
+                callback(element);
             });
         }
         
-        findById(id) {
+        findByOrigin(id) {
             return this.list.find((element) => {
                 return element.getPosition('currentId') === Number(id);
             });

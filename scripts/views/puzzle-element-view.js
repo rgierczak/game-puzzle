@@ -3,7 +3,6 @@
     
     let SETTINGS = root.puzzle.settings;
     let DOMHelper = root.puzzle.helpers.DOMHelper;
-    const MOVEMENT_DURATION = 800;
     
     class PuzzleElementView {
         constructor(model) {
@@ -11,34 +10,34 @@
             this.originId = model.getOriginId();
             
             this.buildTemplate();
+            this.setupView(model);
+            this.setupListeners();
+        }
+    
+        setupView(model) {
             this.setStyle();
             this.setText(model);
-            this.render();
-            this.move(model, MOVEMENT_DURATION);
-            this.setupListeners();
+            this.setCurrentId(model);
         }
         
         buildTemplate() {
             this.$template = $('<div>').addClass('element');
         }
         
-        move(model, duration) {
-            this.setPosition(model, duration);
-            this.setCurrentId(model)
-        }
-        
-        setPosition(model, duration) {
-            this.$template.animate({
-                    left: model.getPosition('left'),
-                    top: model.getPosition('top')
-                }, {
-                    duration,
-                    easing: SETTINGS.STYLE.EASING_TYPE,
-                    complete: () => {
-                        $(document).trigger(SETTINGS.EVENTS.ELEMENT.MOVED);
+        animate(model, duration) {
+            return new Promise((resolve, reject) => {
+                this.$template.animate({
+                        left: model.getPosition('left'),
+                        top: model.getPosition('top')
+                    }, {
+                        duration,
+                        easing: SETTINGS.STYLE.EASING_TYPE,
+                        complete: () => {
+                            resolve();
+                        }
                     }
-                }
-            );
+                );
+            });
         }
         
         setCurrentId(model) {
@@ -57,9 +56,11 @@
             this.$template.text(model.getOriginId());
         }
         
-        render() {
+        render(model, duration) {
             let $wrapper = $('#puzzle-wrapper');
             DOMHelper.append($wrapper, this.$template);
+            
+            this.animate(model, duration);
         }
         
         setupListeners() {

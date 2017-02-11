@@ -21,6 +21,9 @@
                 CLICK: 'element:click',
                 MOVED: 'element:moved'
             },
+            ELEMENTS: {
+                RENDERED: 'elements:rendered'
+            },
             DIALOG: {
                 SHOW_OK: 'dialog:show-ok',
                 SHOW_GAME_OVER: 'dialog:show-game-over',

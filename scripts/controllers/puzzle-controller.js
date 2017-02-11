@@ -35,24 +35,26 @@
         buildPuzzleViews() {
             this.puzzleViews = new PuzzleListView();
             this.puzzleModels.setPosition((model) => this.puzzleViews.add(new PuzzleElementView(model)));
+            this.puzzleViews.render(this.puzzleModels);
         }
         
         setupListeners() {
             $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.getMovementDirection(event, dto));
-            $(document).on(SETTINGS.EVENTS.ELEMENT.MOVED, (event) => this.checkGameStatus(event));
         }
         
         destroyListeners() {
             $(document).off(SETTINGS.EVENTS.ELEMENT.CLICK);
-            $(document).off(SETTINGS.EVENTS.ELEMENT.MOVED);
         }
         
         setClickedElementPosition(model, id) {
             model.setPosition(id);
             
-            this.puzzleViews
-                .findById(model.getOriginId())
-                .move(model, MOVEMENT_DURATION);
+            let view = this.puzzleViews.findByOrigin(model.getOriginId());
+            
+            view.setCurrentId(model);
+            view.animate(model, MOVEMENT_DURATION).then(() => {
+                this.checkGameStatus();
+            });
         }
         
         checkGameStatus() {
@@ -69,7 +71,7 @@
         getMovementDirection(event, dto) {
             let positionId = null;
             let id = dto.detail.currentId;
-            let model = this.puzzleModels.findById(id);
+            let model = this.puzzleModels.findByOrigin(id);
             let currentId = model.getPosition('currentId');
             
             switch (true) {
@@ -97,7 +99,7 @@
         }
         
         getModelPosition(id, direction) {
-            return this.puzzleModels.findById(id).getPosition(direction);
+            return this.puzzleModels.findByOrigin(id).getPosition(direction);
         }
         
         checkMoveRight(id) {
