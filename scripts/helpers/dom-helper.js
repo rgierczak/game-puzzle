@@ -13,11 +13,11 @@
         },
     
         setTopPosition(id) {
-            return SETTINGS.STYLE.ELEMENT_SIZE * Math.floor(id / 4);
+            return SETTINGS.STYLE.ELEMENT_SIZE * Math.floor(id / SETTINGS.STYLE.ELEMENTS_IN_ROW);
         },
     
         setLeftPosition(id) {
-            return SETTINGS.STYLE.ELEMENT_SIZE * (id % 4);
+            return SETTINGS.STYLE.ELEMENT_SIZE * (id % SETTINGS.STYLE.ELEMENTS_IN_ROW);
         },
         
         createDialogBody(message) {

@@ -4,11 +4,11 @@
     const SETTINGS = {
         STYLE: {
             ELEMENT_SIZE: 120,
-            ELEMENTS_AMOUNT: 16,
             ELEMENTS_IN_ROW: 4,
             BORDER_SIZE: 3,
             EASING_TYPE: 'easeOutBack',
             MOVEMENT_DURATION: 50,
+            INIT_MOVEMENT_DURATION: 100,
             DIALOG_WIDTH: 400,
             DIALOG_HEIGHT: 250
         },

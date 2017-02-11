@@ -7,8 +7,8 @@
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
     let PuzzleListView = root.puzzle.views.PuzzleListView;
-    const MOVEMENT_DURATION = 300;
     
+    const ELEMENTS_AMOUNT = SETTINGS.STYLE.ELEMENTS_IN_ROW * SETTINGS.STYLE.ELEMENTS_IN_ROW;
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
     
     class PuzzleController {
@@ -24,7 +24,7 @@
         
         buildPuzzleModels() {
             this.puzzleModels = new PuzzleListModel();
-            for (let i = 0; i < SETTINGS.STYLE.ELEMENTS_AMOUNT - 1; i++)
+            for (let i = 0; i < ELEMENTS_AMOUNT - 1; i++)
                 this.puzzleModels.add(new PuzzleElementModel(i));
         }
         
@@ -52,7 +52,7 @@
             
             let view = this.puzzleViews.findByOrigin(model.getOriginId());
             view.setCurrentId(model);
-            view.animate(model, MOVEMENT_DURATION).then(() => {
+            view.animate(model, SETTINGS.STYLE.MOVEMENT_DURATION).then(() => {
                 console.log(model);
                 this.checkGameStatus();
             });

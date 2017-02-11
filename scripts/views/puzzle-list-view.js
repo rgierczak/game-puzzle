@@ -2,7 +2,6 @@
     'use strict';
     
     let SETTINGS = root.puzzle.settings;
-    let MOVEMENT_DURATION = 100;
     
     class PuzzleListView {
         constructor() {
@@ -39,7 +38,7 @@
             let promises = [];
             models.list.forEach((model, index) => {
                 let element = this.getElement(index);
-                let duration = index * MOVEMENT_DURATION;
+                let duration = index * SETTINGS.STYLE.INIT_MOVEMENT_DURATION;
     
                 promises.push(element.render(model, duration));
             });
