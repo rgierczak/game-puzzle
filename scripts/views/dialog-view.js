@@ -3,8 +3,6 @@
     
     let DOMHelper = root.puzzle.helpers.DOMHelper;
     let SETTINGS = root.puzzle.settings;
-    const DIALOG_WIDTH = 400;
-    const DIALOG_HEIGHT = 300;
     
     function getMessage(messageType) {
         switch (messageType) {
@@ -44,8 +42,8 @@
         buildDialog(message) {
             this.$template.dialog({
                 title: message.title,
-                width: DIALOG_WIDTH,
-                height: DIALOG_HEIGHT,
+                width: SETTINGS.STYLE.DIALOG_WIDTH,
+                height: SETTINGS.STYLE.DIALOG_HEIGHT,
                 resizable: false,
                 buttons: [
                     {

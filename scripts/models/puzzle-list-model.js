@@ -10,6 +10,10 @@
             this.list.push(element);
         }
         
+        each(callback) {
+            this.list.forEach(callback);
+        }
+        
         getList() {
             return this.list;
         }

@@ -60,7 +60,7 @@
             let $wrapper = $('#puzzle-wrapper');
             DOMHelper.append($wrapper, this.$template);
             
-            this.animate(model, duration);
+            return this.animate(model, duration);
         }
         
         setupListeners() {

@@ -39,7 +39,8 @@
         }
         
         setupListeners() {
-            $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.getMovementDirection(event, dto));
+            $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.onElementClick(event, dto));
+            $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
         }
         
         destroyListeners() {
@@ -50,9 +51,9 @@
             model.setPosition(id);
             
             let view = this.puzzleViews.findByOrigin(model.getOriginId());
-            
             view.setCurrentId(model);
             view.animate(model, MOVEMENT_DURATION).then(() => {
+                console.log(model);
                 this.checkGameStatus();
             });
         }
@@ -68,7 +69,11 @@
             }
         }
         
-        getMovementDirection(event, dto) {
+        onElementsRendered() {
+            console.log('All elements have been rendered.');
+        }
+        
+        onElementClick(event, dto) {
             let positionId = null;
             let id = dto.detail.currentId;
             let model = this.puzzleModels.findByOrigin(id);
