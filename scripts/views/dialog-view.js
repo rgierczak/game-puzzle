@@ -9,7 +9,7 @@
             case 'welcome':
                 return {
                     title: 'Welcome in numeric puzzle game',
-                    body: 'The goal is to set numeric sequence from 0 to 14 starting from top left corner, ' +
+                    body: 'The goal is to set number sequence in ascending order, starting from top left corner, ' +
                     'as fast as you can!' + '\<br/>\<br/>' + 'Good luck!'
                 };
             case 'game-over':
