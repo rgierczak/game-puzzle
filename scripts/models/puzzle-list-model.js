@@ -19,7 +19,7 @@
         }
         
         setPosition(callback) {
-            this.list.forEach((element, index) => {
+            this.each((element, index) => {
                 element.setPosition(index);
                 callback(element);
             });

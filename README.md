@@ -4,7 +4,7 @@
 
 ## How to play ?
 
-The goal of the game is to display all the numbers in increment order.
+The goal of the game is to display all the numbers in ascending order.
 
 ## Demo
 
