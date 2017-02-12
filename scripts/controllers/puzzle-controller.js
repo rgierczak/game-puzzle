@@ -45,6 +45,7 @@
         
         destroyListeners() {
             $(document).off(SETTINGS.EVENTS.ELEMENT.CLICK);
+            $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
         }
         
         setClickedElementPosition(model, id) {
@@ -53,23 +54,13 @@
             let view = this.getCurrentView(model);
             view.setCurrentId(model);
             view.animate(model, SETTINGS.STYLE.MOVEMENT_DURATION).then(() => {
-                console.log(model);
-                this.checkElementPosition(model);
+                view.$template.trigger(SETTINGS.EVENTS.ELEMENT.COLOR, [{ model }]);
                 this.checkGameStatus();
             });
         }
         
         getCurrentView(model) {
             return this.puzzleViews.findByOrigin(model.getOriginId());
-        }
-        
-        checkElementPosition(model) {
-            let view = this.getCurrentView(model);
-            let color = model.isOnTargetPosition() ? 
-                SETTINGS.STYLE.CORRECT_POSITION_COLOR : 
-                SETTINGS.STYLE.INCORRECT_POSITION_COLOR;
-            
-            view.setBackgroundColor(color);
         }
         
         checkGameStatus() {
@@ -89,7 +80,7 @@
         
         onElementClick(event, dto) {
             let positionId = null;
-            let id = dto.detail.currentId;
+            let id = dto.currentId;
             let model = this.puzzleModels.findByOrigin(id);
             let currentId = model.getPosition('currentId');
             

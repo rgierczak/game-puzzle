@@ -13,7 +13,7 @@
             this.setupView(model);
             this.setupListeners();
         }
-    
+        
         setupView(model) {
             this.setStyle();
             this.setText(model);
@@ -43,7 +43,7 @@
         setCurrentId(model) {
             this.$template.attr('data-id', model.getPosition('currentId'));
         }
-    
+        
         setBackgroundColor(color) {
             this.$template.css('background-color', color);
         }
@@ -60,23 +60,30 @@
             this.$template.text(model.getOriginId());
         }
         
+        checkElementPosition(model) {
+            let color = model.isOnTargetPosition() ?
+                SETTINGS.STYLE.CORRECT_POSITION_COLOR :
+                SETTINGS.STYLE.INCORRECT_POSITION_COLOR;
+            
+            this.setBackgroundColor(color);
+        }
+        
         render(model, duration) {
             let $wrapper = $('#puzzle-wrapper');
             DOMHelper.append($wrapper, this.$template);
             
+            this.checkElementPosition(model);
             return this.animate(model, duration);
         }
         
         setupListeners() {
             this.$template.on('click', (event) => this.clickHandler(event));
+            this.$template.on(SETTINGS.EVENTS.ELEMENT.COLOR, (event, dto) => this.checkElementPosition(dto.model));
         }
         
         clickHandler(event) {
             let payload = {
-                detail: {
-                    currentId: event.target.dataset.id,
-                    originId: this.originId
-                }
+                currentId: event.target.dataset.id
             };
             
             $(document).trigger(SETTINGS.EVENTS.ELEMENT.CLICK, [payload]);

@@ -9,8 +9,8 @@
             EASING_TYPE: 'easeOutBack',
             MOVEMENT_DURATION: 100,
             INIT_MOVEMENT_DURATION: 12,
-            DIALOG_WIDTH: 400,
-            DIALOG_HEIGHT: 250,
+            DIALOG_WIDTH: 450,
+            DIALOG_HEIGHT: 300,
             CORRECT_POSITION_COLOR: '#00d025',
             INCORRECT_POSITION_COLOR: '#018aff'
         },
@@ -24,7 +24,8 @@
             DOM_CONTENT_LOADED: 'DOMContentLoaded',
             ELEMENT: {
                 CLICK: 'element:click',
-                MOVED: 'element:moved'
+                MOVED: 'element:moved',
+                COLOR: 'element:color'
             },
             ELEMENTS: {
                 RENDERED: 'elements:rendered'
