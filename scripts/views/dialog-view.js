@@ -45,11 +45,12 @@
                 width: SETTINGS.STYLE.DIALOG_WIDTH,
                 height: SETTINGS.STYLE.DIALOG_HEIGHT,
                 resizable: false,
+                draggable: false,
                 buttons: [
                     {
-                        text: 'OK',
+                        text: 'PLAY',
                         icons: {
-                            primary: 'ui-icon-heart'
+                            primary: 'ui-icon-play'
                         },
                         click: function() {
                             $(this).dialog('close');

@@ -20,4 +20,5 @@ body {
     background-color: #018aff;
     position: absolute;
     border: solid #ffffff;
+    border-radius: 10px;
 }
