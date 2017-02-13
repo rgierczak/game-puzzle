@@ -40,11 +40,19 @@
             });
         }
         
+        move(model, duration) {
+            this.setCurrentId(model);
+            return this.animate(model, duration).then(() => this.onAnimateHandler(model));
+        }
+        
         setCurrentId(model) {
             this.$template.attr('data-id', model.getPosition('currentId'));
         }
         
-        setBackgroundColor(color) {
+        setBackgroundColor(model) {
+            let color = model.isOnTargetPosition() ?
+                SETTINGS.STYLE.CORRECT_POSITION_COLOR :
+                SETTINGS.STYLE.INCORRECT_POSITION_COLOR;
             this.$template.css('background-color', color);
         }
         
@@ -60,32 +68,22 @@
             this.$template.text(model.getOriginId());
         }
         
-        checkElementPosition(model) {
-            let color = model.isOnTargetPosition() ?
-                SETTINGS.STYLE.CORRECT_POSITION_COLOR :
-                SETTINGS.STYLE.INCORRECT_POSITION_COLOR;
-            
-            this.setBackgroundColor(color);
-        }
-        
         render(model, duration) {
-            let $wrapper = $('#puzzle-wrapper');
-            DOMHelper.append($wrapper, this.$template);
-            
-            this.checkElementPosition(model);
+            DOMHelper.append($('#puzzle-wrapper'), this.$template);
             return this.animate(model, duration);
         }
         
         setupListeners() {
             this.$template.on('click', (event) => this.clickHandler(event));
-            this.$template.on(SETTINGS.EVENTS.ELEMENT.COLOR, (event, dto) => this.checkElementPosition(dto.model));
+        }
+    
+        onAnimateHandler(model) {
+            this.setBackgroundColor(model);
+            $(document).trigger(SETTINGS.EVENTS.ELEMENT.ANIMATED);
         }
         
         clickHandler(event) {
-            let payload = {
-                currentId: event.target.dataset.id
-            };
-            
+            let payload = { currentId: event.target.dataset.id };
             $(document).trigger(SETTINGS.EVENTS.ELEMENT.CLICK, [payload]);
         }
     }

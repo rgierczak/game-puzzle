@@ -25,7 +25,7 @@
             ELEMENT: {
                 CLICK: 'element:click',
                 MOVED: 'element:moved',
-                COLOR: 'element:color'
+                ANIMATED: 'element:aminated'
             },
             ELEMENTS: {
                 RENDERED: 'elements:rendered'

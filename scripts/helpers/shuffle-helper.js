@@ -2,17 +2,23 @@
     'use strict';
     
     let ShuffleHelper = {
-        singleElementShuffle() {
-            let arr = [];
-            this.puzzleModels.list.forEach((model) => {
-                if (this.setDirection(model.getPosition('currentId')) !== null) {
-                    arr.push(model.getOriginId());
-                }
-            });
+        lastMovedId: null,
+    
+        getRandomNumber: function (array) {
+            return Math.floor(Math.random() * array.length);
+        },
         
-            let randomModelOriginId = this.getRandomModel(arr);
-            let randomModel = this.puzzleModels.findByOriginId(randomModelOriginId);
-            return this.movementHandler(null, randomModel, 50);
+        getRandomModel(array) {
+            let randomIndex = this.getRandomNumber(array);
+            let isPreviousIndex = (array[randomIndex] === this.lastMovedId); 
+            
+            if (isPreviousIndex) {
+                this.getRandomModel(array);
+            } else {
+                this.lastMovedId = array[randomIndex];
+            }
+            
+            return this.lastMovedId;
         }
     };
     

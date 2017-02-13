@@ -23,9 +23,17 @@
         add(element) {
             this.list.push(element);
         }
+    
+        each(callback) {
+            this.list.forEach(callback);
+        }
         
         getElement(id) {
             return this.list[id];
+        }
+    
+        getCurrentView(model) {
+            return this.findByCurrentId(model.getOriginId());
         }
         
         findByCurrentId(id) {
@@ -35,17 +43,24 @@
         }
         
         render(models) {
-            let promises = [];
-            models.list.forEach((model, index) => {
-                let element = this.getElement(index);
-                let duration = index * SETTINGS.STYLE.INIT_MOVEMENT_DURATION;
-    
-                promises.push(element.render(model, duration));
-            });
+            let promises = this.getElementsToRender(models);
             
             Promise.all(promises).then(() => {
                 $(document).trigger(SETTINGS.EVENTS.ELEMENTS.RENDERED);
             });
+        }
+        
+        getElementsToRender(models) {
+            let promises = [];
+            
+            models.each((model, index) => {
+                let element = this.getElement(index);
+                let duration = index * SETTINGS.STYLE.INIT_MOVEMENT_DURATION;
+        
+                promises.push(element.render(model, duration));
+            });
+            
+            return promises;
         }
     }
     

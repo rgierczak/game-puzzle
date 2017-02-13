@@ -19,8 +19,6 @@
             this.buildPuzzleModels();
             this.buildPuzzleViews();
             this.setupListeners();
-            
-            this.lastMovedId = null;
         }
         
         buildPuzzleModels() {
@@ -38,6 +36,7 @@
         setupListeners() {
             $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.movementHandler(event, dto));
             $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
+            $(document).on(SETTINGS.EVENTS.ELEMENT.ANIMATED, (event) => this.checkGameStatus());
         }
         
         destroyListeners() {
@@ -48,18 +47,11 @@
         move(model, id, duration) {
             model.setPosition(id);
             
-            let view = this.getCurrentView(model);
-            view.setCurrentId(model);
-            return view.animate(model, duration).then(() => {
-                view.$template.trigger(SETTINGS.EVENTS.ELEMENT.COLOR, [{ model }]);
-                this.checkGameStatus();
-            });
+            return this.puzzleViews
+                .getCurrentView(model)
+                .move(model, duration);
         }
-        
-        getCurrentView(model) {
-            return this.puzzleViews.findByCurrentId(model.getOriginId());
-        }
-        
+
         checkGameStatus() {
             let isGameOver = this.puzzleModels.list.every((model) => {
                 return model.isOnTargetPosition();
@@ -101,7 +93,7 @@
                 }
             });
             
-            let randomModelOriginId = this.getRandomModel(arr);
+            let randomModelOriginId = ShuffleHelper.getRandomModel(arr);
             let randomModel = this.puzzleModels.findByOriginId(randomModelOriginId);
             return this.movementHandler(null, randomModel, 50);
         }
@@ -145,16 +137,6 @@
                 default:
                     return null;
             }
-        }
-        
-        getRandomModel(array) {
-            let randomIndex = Math.floor(Math.random() * array.length);
-            if (array[randomIndex] === this.lastMovedId) {
-                this.getRandomModel(array);
-            } else {
-                this.lastMovedId = array[randomIndex];
-            }
-            return this.lastMovedId;
         }
         
         getModelPosition(id, direction) {
