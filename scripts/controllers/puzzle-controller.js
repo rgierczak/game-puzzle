@@ -3,6 +3,7 @@
     
     let SETTINGS = root.puzzle.settings;
     let ShuffleHelper = root.puzzle.helpers.ShuffleHelper;
+    let PromiseHelper = root.puzzle.helpers.PromiseHelper;
     let PuzzleListModel = root.puzzle.models.PuzzleListModel;
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
@@ -51,7 +52,7 @@
                 .getCurrentView(model)
                 .move(model, duration);
         }
-
+        
         checkGameStatus() {
             let isGameOver = this.puzzleModels.list.every((model) => {
                 return model.isOnTargetPosition();
@@ -67,22 +68,14 @@
             console.log('All elements have been rendered.');
             
             let promiseFactories = [];
+            
             for (let i = 0; i < 100; i++) {
                 promiseFactories.push(() => {
                     return this.singleElementShuffle();
                 });
             }
             
-            this.executeSequentially(promiseFactories);
-        }
-        
-        executeSequentially(promiseFactories) {
-            let result = Promise.resolve();
-            promiseFactories.forEach((promiseFactory) => {
-                result = result.then(promiseFactory);
-            });
-
-            return result;
+            PromiseHelper.resolveSequentially(promiseFactories);
         }
         
         singleElementShuffle() {
