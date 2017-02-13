@@ -14,8 +14,8 @@
             this.list.forEach(callback);
         }
         
-        getList() {
-            return this.list;
+        find(callback) {
+            return this.list.find(callback);
         }
         
         setPosition(callback) {
@@ -26,13 +26,13 @@
         }
         
         findByCurrentId(id) {
-            return this.list.find((element) => {
+            return this.find((element) => {
                 return element.getPosition('currentId') === Number(id);
             });
         }
     
         findByOriginId(id) {
-            return this.list.find((element) => {
+            return this.find((element) => {
                 return element.getOriginId() === Number(id);
             });
         }
