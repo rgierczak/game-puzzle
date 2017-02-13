@@ -25,9 +25,15 @@
             });
         }
         
-        findByOrigin(id) {
+        findByCurrentId(id) {
             return this.list.find((element) => {
                 return element.getPosition('currentId') === Number(id);
+            });
+        }
+    
+        findByOriginId(id) {
+            return this.list.find((element) => {
+                return element.getOriginId() === Number(id);
             });
         }
     }

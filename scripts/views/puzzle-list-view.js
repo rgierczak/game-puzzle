@@ -28,7 +28,7 @@
             return this.list[id];
         }
         
-        findByOrigin(id) {
+        findByCurrentId(id) {
             return this.list.find((element) => {
                 return element.originId === Number(id);
             });

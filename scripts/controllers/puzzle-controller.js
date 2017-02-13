@@ -2,7 +2,7 @@
     'use strict';
     
     let SETTINGS = root.puzzle.settings;
-    let PuzzleHelper = root.puzzle.helpers.PuzzleHelper;
+    let ShuffleHelper = root.puzzle.helpers.ShuffleHelper;
     let PuzzleListModel = root.puzzle.models.PuzzleListModel;
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
@@ -17,19 +17,16 @@
             this.puzzleViews = null;
             
             this.buildPuzzleModels();
-            this.shufflePuzzleModels();
             this.buildPuzzleViews();
             this.setupListeners();
+            
+            this.lastMovedId = null;
         }
         
         buildPuzzleModels() {
             this.puzzleModels = new PuzzleListModel();
             for (let i = 0; i < ELEMENTS_AMOUNT - 1; i++)
                 this.puzzleModels.add(new PuzzleElementModel(i));
-        }
-        
-        shufflePuzzleModels() {
-            PuzzleHelper.shuffle(this.puzzleModels.getList());
         }
         
         buildPuzzleViews() {
@@ -39,7 +36,7 @@
         }
         
         setupListeners() {
-            $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.onElementClick(event, dto));
+            $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.movementHandler(event, dto));
             $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
         }
         
@@ -48,19 +45,19 @@
             $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
         }
         
-        setClickedElementPosition(model, id) {
+        move(model, id, duration) {
             model.setPosition(id);
             
             let view = this.getCurrentView(model);
             view.setCurrentId(model);
-            view.animate(model, SETTINGS.STYLE.MOVEMENT_DURATION).then(() => {
+            return view.animate(model, duration).then(() => {
                 view.$template.trigger(SETTINGS.EVENTS.ELEMENT.COLOR, [{ model }]);
                 this.checkGameStatus();
             });
         }
         
         getCurrentView(model) {
-            return this.puzzleViews.findByOrigin(model.getOriginId());
+            return this.puzzleViews.findByCurrentId(model.getOriginId());
         }
         
         checkGameStatus() {
@@ -76,40 +73,92 @@
         
         onElementsRendered() {
             console.log('All elements have been rendered.');
+            
+            let promiseFactories = [];
+            for (let i = 0; i < 100; i++) {
+                promiseFactories.push(() => {
+                    return this.singleElementShuffle();
+                });
+            }
+            
+            this.executeSequentially(promiseFactories);
         }
         
-        onElementClick(event, dto) {
-            let positionId = null;
-            let id = dto.currentId;
-            let model = this.puzzleModels.findByOrigin(id);
-            let currentId = model.getPosition('currentId');
+        executeSequentially(promiseFactories) {
+            let result = Promise.resolve();
+            promiseFactories.forEach((promiseFactory) => {
+                result = result.then(promiseFactory);
+            });
+
+            return result;
+        }
+        
+        singleElementShuffle() {
+            let arr = [];
+            this.puzzleModels.list.forEach((model) => {
+                if (this.setDirection(model.getPosition('currentId')) !== null) {
+                    arr.push(model.getOriginId());
+                }
+            });
             
+            let randomModelOriginId = this.getRandomModel(arr);
+            let randomModel = this.puzzleModels.findByOriginId(randomModelOriginId);
+            return this.movementHandler(null, randomModel, 50);
+        }
+        
+        movementHandler(event, dto, duration = SETTINGS.STYLE.MOVEMENT_DURATION) {
+            let id = dto.currentId ? dto.currentId : dto.getPosition('currentId');
+            let model = this.puzzleModels.findByCurrentId(id);
+            let currentId = model.getPosition('currentId');
+            let direction = this.setDirection(id);
+            let positionId = this.setPositionId(direction, currentId);
+            
+            if (positionId !== null)
+                return this.move(model, positionId, duration);
+        }
+        
+        setDirection(id) {
             switch (true) {
                 case this.checkMoveRight(id):
-                    positionId = currentId + 1;
-                    break;
-                
+                    return 'right';
                 case this.checkMoveLeft(id):
-                    positionId = currentId - 1;
-                    break;
-                
+                    return 'left';
                 case this.checkMoveTop(id):
-                    positionId = currentId - SETTINGS.STYLE.ELEMENTS_IN_ROW;
-                    break;
-                
+                    return 'top';
                 case this.checkMoveBottom(id):
-                    positionId = currentId + SETTINGS.STYLE.ELEMENTS_IN_ROW;
-                    break;
-                
+                    return 'bottom';
                 default:
                     return null;
             }
-            
-            this.setClickedElementPosition(model, positionId);
+        }
+        
+        setPositionId(direction, currentId) {
+            switch (direction) {
+                case 'right':
+                    return currentId + 1;
+                case 'left':
+                    return currentId - 1;
+                case 'top':
+                    return currentId - SETTINGS.STYLE.ELEMENTS_IN_ROW;
+                case 'bottom':
+                    return currentId + SETTINGS.STYLE.ELEMENTS_IN_ROW;
+                default:
+                    return null;
+            }
+        }
+        
+        getRandomModel(array) {
+            let randomIndex = Math.floor(Math.random() * array.length);
+            if (array[randomIndex] === this.lastMovedId) {
+                this.getRandomModel(array);
+            } else {
+                this.lastMovedId = array[randomIndex];
+            }
+            return this.lastMovedId;
         }
         
         getModelPosition(id, direction) {
-            return this.puzzleModels.findByOrigin(id).getPosition(direction);
+            return this.puzzleModels.findByCurrentId(id).getPosition(direction);
         }
         
         checkMoveRight(id) {
