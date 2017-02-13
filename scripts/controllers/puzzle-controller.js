@@ -43,6 +43,7 @@
         destroyListeners() {
             $(document).off(SETTINGS.EVENTS.ELEMENT.CLICK);
             $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
+            $(document).off(SETTINGS.EVENTS.ELEMENT.ANIMATED);
         }
         
         move(model, id, duration) {
@@ -54,7 +55,7 @@
         }
         
         checkGameStatus() {
-            let isGameOver = this.puzzleModels.list.every((model) => {
+            let isGameOver = this.puzzleModels.every((model) => {
                 return model.isOnTargetPosition();
             });
             
@@ -66,29 +67,29 @@
         
         onElementsRendered() {
             console.log('All elements have been rendered.');
-            
             let promiseFactories = [];
             
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < SETTINGS.STYLE.SHUFFLE_ITERATIONS; i++) {
                 promiseFactories.push(() => {
-                    return this.singleElementShuffle();
+                    return this.shuffleElement();
                 });
             }
             
             PromiseHelper.resolveSequentially(promiseFactories);
         }
         
-        singleElementShuffle() {
-            let arr = [];
-            this.puzzleModels.list.forEach((model) => {
+        shuffleElement() {
+            let modelIds = [];
+            
+            this.puzzleModels.each((model) => {
                 if (this.setDirection(model.getPosition('currentId')) !== null) {
-                    arr.push(model.getOriginId());
+                    modelIds.push(model.getOriginId());
                 }
             });
             
-            let randomModelOriginId = ShuffleHelper.getRandomModel(arr);
-            let randomModel = this.puzzleModels.findByOriginId(randomModelOriginId);
-            return this.movementHandler(null, randomModel, 50);
+            let id = ShuffleHelper.getRandomModelOriginId(modelIds);
+            let randomModel = this.puzzleModels.findByOriginId(id);
+            return this.movementHandler(null, randomModel, SETTINGS.STYLE.SHUFFLE_MOVEMENT_DURATION);
         }
         
         movementHandler(event, dto, duration = SETTINGS.STYLE.MOVEMENT_DURATION) {

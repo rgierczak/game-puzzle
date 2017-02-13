@@ -18,6 +18,10 @@
             return this.list.find(callback);
         }
         
+        every(callback) {
+            this.list.every(callback);
+        }
+        
         setPosition(callback) {
             this.each((element, index) => {
                 element.setPosition(index);

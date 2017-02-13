@@ -12,7 +12,9 @@
             DIALOG_WIDTH: 450,
             DIALOG_HEIGHT: 300,
             CORRECT_POSITION_COLOR: '#00d025',
-            INCORRECT_POSITION_COLOR: '#018aff'
+            INCORRECT_POSITION_COLOR: '#018aff',
+            SHUFFLE_ITERATIONS: 100,
+            SHUFFLE_MOVEMENT_DURATION: 50
         },
         POSITIONS: {
             LEFT: 'left',

@@ -8,14 +8,14 @@
             return Math.floor(Math.random() * array.length);
         },
         
-        getRandomModel(array) {
-            let randomIndex = this.getRandomNumber(array);
+        getRandomModelOriginId(array) {
+            let randomIndex = ShuffleHelper.getRandomNumber(array);
             let isPreviousIndex = (array[randomIndex] === this.lastMovedId); 
             
             if (isPreviousIndex) {
-                this.getRandomModel(array);
+                ShuffleHelper.getRandomModelOriginId(array);
             } else {
-                this.lastMovedId = array[randomIndex];
+                ShuffleHelper.lastMovedId = array[randomIndex];
             }
             
             return this.lastMovedId;
