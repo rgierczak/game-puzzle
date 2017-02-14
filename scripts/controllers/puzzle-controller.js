@@ -36,14 +36,16 @@
         
         setupListeners() {
             $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.movementHandler(event, dto));
-            $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
             $(document).on(SETTINGS.EVENTS.ELEMENT.ANIMATED, (event) => this.checkGameStatus());
+            $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
+            $(document).on(SETTINGS.EVENTS.ELEMENTS.SHUFFLED, (event) => this.onElementsShuffled(event));
         }
         
         destroyListeners() {
             $(document).off(SETTINGS.EVENTS.ELEMENT.CLICK);
             $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
             $(document).off(SETTINGS.EVENTS.ELEMENT.ANIMATED);
+            $(document).off(SETTINGS.EVENTS.ELEMENTS.SHUFFLED);
         }
         
         checkGameStatus() {
@@ -55,6 +57,10 @@
                 this.destroyListeners();
                 $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
             }
+        }
+    
+        onElementsShuffled() {
+            console.log('All elements have been shuffled.');
         }
         
         onElementsRendered() {

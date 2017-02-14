@@ -13,8 +13,8 @@
             DIALOG_HEIGHT: 300,
             CORRECT_POSITION_COLOR: '#00d025',
             INCORRECT_POSITION_COLOR: '#018aff',
-            SHUFFLE_ITERATIONS: 100,
-            SHUFFLE_MOVE_TIME: 50
+            SHUFFLE_ITERATIONS: 50,
+            SHUFFLE_MOVE_TIME: 100
         },
         POSITIONS: {
             LEFT: 'left',
@@ -30,7 +30,8 @@
                 ANIMATED: 'element:aminated'
             },
             ELEMENTS: {
-                RENDERED: 'elements:rendered'
+                RENDERED: 'elements:rendered',
+                SHUFFLED: 'elements:shuffled'
             },
             DIALOG: {
                 SHOW_OK: 'dialog:show-ok',
