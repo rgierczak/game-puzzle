@@ -16,7 +16,7 @@
             return result;
         },
         
-        createPromise(callback) {
+        create(callback) {
             return new Promise((resolve, reject) => {
                 callback(resolve, reject);
             })

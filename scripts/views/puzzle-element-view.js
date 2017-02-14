@@ -58,11 +58,13 @@
         
         render(model, duration) {
             DOMHelper.append($('#puzzle-wrapper'), this.$template);
-            return this.animate(model, duration);
+            this.setBackgroundColor(model);
+    
+            return this.animate(model, duration).then(() => this.onAnimateHandler(model));
         }
         
         animate(model, duration) {
-            return PromiseHelper.createPromise((resolve, reject) => {
+            return PromiseHelper.create((resolve, reject) => {
                 this.animateTemplate(model, duration, resolve);
             })
         }
