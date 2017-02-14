@@ -46,14 +46,6 @@
             $(document).off(SETTINGS.EVENTS.ELEMENT.ANIMATED);
         }
         
-        move(model, id, duration) {
-            model.setPosition(id);
-            
-            return this.puzzleViews
-                .getCurrentView(model)
-                .move(model, duration);
-        }
-        
         checkGameStatus() {
             let isGameOver = this.puzzleModels.every((model) => {
                 return model.isOnTargetPosition();
@@ -82,28 +74,37 @@
             let modelIds = [];
             
             this.puzzleModels.each((model) => {
-                if (this.setDirection(model.getPosition('currentId')) !== null) {
+                let isMovementPossible = (this.checkDirection(model.getPosition('currentId')) !== null);
+                if (isMovementPossible) {
                     modelIds.push(model.getOriginId());
                 }
             });
             
-            let id = ShuffleHelper.getRandomModelOriginId(modelIds);
-            let randomModel = this.puzzleModels.findByOriginId(id);
+            let originId = ShuffleHelper.getRandomModelOriginId(modelIds);
+            let randomModel = this.puzzleModels.findByOriginId(originId);
+
             return this.movementHandler(null, randomModel, SETTINGS.STYLE.SHUFFLE_MOVEMENT_DURATION);
         }
         
         movementHandler(event, dto, duration = SETTINGS.STYLE.MOVEMENT_DURATION) {
-            let id = dto.currentId ? dto.currentId : dto.getPosition('currentId');
-            let model = this.puzzleModels.findByCurrentId(id);
-            let currentId = model.getPosition('currentId');
-            let direction = this.setDirection(id);
-            let positionId = this.setPositionId(direction, currentId);
+            let currentId = dto.currentId ? dto.currentId : dto.getPosition('currentId');
+            let model = this.puzzleModels.findByCurrentId(currentId);
+            let updatedCurrentId = this.updateCurrentId(currentId, model);
             
-            if (positionId !== null)
-                return this.move(model, positionId, duration);
+            if (updatedCurrentId !== null)
+                return this.move(model, updatedCurrentId, duration);
+        }
+    
+    
+        move(model, id, duration) {
+            model.setPosition(id);
+        
+            return this.puzzleViews
+                .getCurrentView(model)
+                .move(model, duration);
         }
         
-        setDirection(id) {
+        checkDirection(id) {
             switch (true) {
                 case this.checkMoveRight(id):
                     return 'right';
@@ -118,7 +119,10 @@
             }
         }
         
-        setPositionId(direction, currentId) {
+        updateCurrentId(id, model) {
+            let direction = this.checkDirection(id);
+            let currentId = model.getPosition('currentId');
+    
             switch (direction) {
                 case 'right':
                     return currentId + 1;
