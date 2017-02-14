@@ -21,8 +21,12 @@
             };
         }
         
-        getPosition(property) {
+        getPositionProperty(property) {
             return this.position[property];
+        }
+    
+        getPosition() {
+            return this.position;
         }
         
         getOriginId() {
@@ -30,7 +34,7 @@
         }
         
         isOnTargetPosition() {
-            return this.getOriginId() == this.getPosition('currentId');
+            return this.getOriginId() == this.getPositionProperty('currentId');
         }
     }
     

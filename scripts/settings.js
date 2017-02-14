@@ -7,14 +7,14 @@
             ELEMENTS_IN_ROW: 4,
             BORDER_SIZE: 3,
             EASING_TYPE: 'easeOutBack',
-            MOVEMENT_DURATION: 300,
-            INIT_MOVEMENT_DURATION: 100,
+            MOVE_TIME: 300,
+            INIT_MOVE_TIME: 100,
             DIALOG_WIDTH: 450,
             DIALOG_HEIGHT: 300,
             CORRECT_POSITION_COLOR: '#00d025',
             INCORRECT_POSITION_COLOR: '#018aff',
             SHUFFLE_ITERATIONS: 100,
-            SHUFFLE_MOVEMENT_DURATION: 50
+            SHUFFLE_MOVE_TIME: 50
         },
         POSITIONS: {
             LEFT: 'left',

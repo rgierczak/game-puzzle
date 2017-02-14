@@ -56,7 +56,7 @@
             
             models.each((model, index) => {
                 let element = this.getElement(index);
-                let duration = index * SETTINGS.STYLE.INIT_MOVEMENT_DURATION;
+                let duration = index * SETTINGS.STYLE.INIT_MOVE_TIME;
                 
                 promises.push(element.render(model, duration));
             });

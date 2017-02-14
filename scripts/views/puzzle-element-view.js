@@ -39,7 +39,7 @@
         }
         
         setCurrentId(model) {
-            this.$template.attr('data-id', model.getPosition('currentId'));
+            this.$template.attr('data-id', model.getPositionProperty('currentId'));
         }
         
         buildTemplate() {
@@ -69,8 +69,8 @@
         
         animateTemplate(model, duration, callback) {
             this.$template.animate({
-                    left: model.getPosition('left'),
-                    top: model.getPosition('top')
+                    left: model.getPositionProperty('left'),
+                    top: model.getPositionProperty('top')
                 }, {
                     duration,
                     easing: SETTINGS.STYLE.EASING_TYPE,

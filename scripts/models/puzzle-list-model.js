@@ -31,7 +31,7 @@
         
         findByCurrentId(id) {
             return this.find((element) => {
-                return element.getPosition('currentId') === Number(id);
+                return element.getPositionProperty('currentId') === Number(id);
             });
         }
     

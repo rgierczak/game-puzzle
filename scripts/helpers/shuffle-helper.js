@@ -8,12 +8,12 @@
             return Math.floor(Math.random() * array.length);
         },
         
-        getRandomModelOriginId(array) {
+        getRandomOriginId(array) {
             let randomIndex = ShuffleHelper.getRandomNumber(array);
             let isPreviousIndex = (array[randomIndex] === this.lastMovedId); 
             
             if (isPreviousIndex) {
-                ShuffleHelper.getRandomModelOriginId(array);
+                ShuffleHelper.getRandomOriginId(array);
             } else {
                 ShuffleHelper.lastMovedId = array[randomIndex];
             }
