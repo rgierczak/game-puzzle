@@ -19,6 +19,7 @@
                 SETTINGS.STYLE.ELEMENTS_IN_ROW;
             
             this.$template.width(wrapperWidth + 'px');
+            this.$template.height(wrapperWidth + 'px');
         }
         
         add(element) {

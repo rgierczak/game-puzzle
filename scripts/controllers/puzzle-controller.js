@@ -8,14 +8,16 @@
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
     let PuzzleListView = root.puzzle.views.PuzzleListView;
+    let GameView = root.puzzle.views.GameView;
     
     const ELEMENTS_AMOUNT = SETTINGS.STYLE.ELEMENTS_IN_ROW * SETTINGS.STYLE.ELEMENTS_IN_ROW;
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
     
     class PuzzleController {
         constructor() {
-            this.models = null;
-            this.views = null;
+            this.gameView = null;
+            this.puzzleModels = null;
+            this.puzzleView = null;
             
             this.buildModels();
             this.buildViews();
@@ -23,15 +25,16 @@
         }
         
         buildModels() {
-            this.models = new PuzzleListModel();
+            this.puzzleModels = new PuzzleListModel();
             for (let i = 0; i < ELEMENTS_AMOUNT - 1; i++)
-                this.models.add(new PuzzleElementModel(i));
+                this.puzzleModels.add(new PuzzleElementModel(i));
         }
         
         buildViews() {
-            this.views = new PuzzleListView();
-            this.models.setPosition((model) => this.views.add(new PuzzleElementView(model)));
-            this.views.render(this.models);
+            this.gameView = new GameView();
+            this.puzzleView = new PuzzleListView();
+            this.puzzleModels.setPosition((model) => this.puzzleView.add(new PuzzleElementView(model)));
+            this.puzzleView.render(this.puzzleModels);
         }
         
         setupListeners() {
@@ -39,6 +42,7 @@
             $(document).on(SETTINGS.EVENTS.ELEMENT.ANIMATED, (event) => this.checkGameStatus());
             $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
             $(document).on(SETTINGS.EVENTS.ELEMENTS.SHUFFLED, (event) => this.onElementsShuffled(event));
+            $(document).on(SETTINGS.EVENTS.GAME.START, (event) => this.onGameStart(event));
         }
         
         destroyListeners() {
@@ -46,10 +50,11 @@
             $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
             $(document).off(SETTINGS.EVENTS.ELEMENT.ANIMATED);
             $(document).off(SETTINGS.EVENTS.ELEMENTS.SHUFFLED);
+            $(document).off(SETTINGS.EVENTS.GAME.START);
         }
         
         checkGameStatus() {
-            let isGameOver = this.models.every((model) => {
+            let isGameOver = this.puzzleModels.every((model) => {
                 return model.isOnTargetPosition();
             });
             
@@ -61,25 +66,34 @@
     
         onElementsShuffled() {
             console.log('All elements have been shuffled.');
+            // this.gameView.setupListeners();
         }
         
         onElementsRendered() {
             console.log('All elements have been rendered.');
+        }
+        
+        onGameStart() {
+            this.gameView.destroyListeners();
+            this.shuffle();
+        }
+        
+        shuffle() {
             let promiseFactories = [];
-            
+    
             for (let i = 0; i < SETTINGS.STYLE.SHUFFLE_ITERATIONS; i++) {
                 promiseFactories.push(() => {
                     return this.shuffleElement();
                 });
             }
-            
+    
             PromiseHelper.resolveSequentially(promiseFactories);
         }
         
         shuffleElement() {
             let modelIds = this.getMovementModels();
             let originId = ShuffleHelper.getRandomOriginId(modelIds);
-            let randomModelPosition = this.models.findByOriginId(originId).getPosition();
+            let randomModelPosition = this.puzzleModels.findByOriginId(originId).getPosition();
             
             return this.movementHandler(null, randomModelPosition, SETTINGS.STYLE.SHUFFLE_MOVE_TIME);
         }
@@ -87,7 +101,7 @@
         getMovementModels() {
             let models = [];
             
-            this.models.each((model) => {
+            this.puzzleModels.each((model) => {
                 let currentId = model.getPositionProperty('currentId');
                 let isMovementPossible = (this.checkDirection(currentId) !== null);
                 
@@ -100,7 +114,7 @@
         }
         
         movementHandler(event, dto, duration = SETTINGS.STYLE.MOVE_TIME) {
-            let model = this.models.findByCurrentId(dto.currentId);
+            let model = this.puzzleModels.findByCurrentId(dto.currentId);
             let updatedCurrentId = this.updateCurrentId(dto.currentId, model);
             
             return this.move(model, updatedCurrentId, duration);
@@ -112,7 +126,7 @@
             
             model.setPosition(id);
             
-            let view = this.views.getCurrentView(model);
+            let view = this.puzzleView.getCurrentView(model);
             return view.move(model, duration);
         }
         
@@ -158,7 +172,7 @@
         }
         
         getModelPosition(id, direction) {
-            return this.models.findByCurrentId(id).getPositionProperty(direction);
+            return this.puzzleModels.findByCurrentId(id).getPositionProperty(direction);
         }
         
         checkMoveRight(id) {
@@ -190,7 +204,7 @@
         }
         
         isNextElement(id) {
-            return this.models.list.find((element) => {
+            return this.puzzleModels.list.find((element) => {
                 return Boolean(element.getPositionProperty('currentId') == id);
             });
         }

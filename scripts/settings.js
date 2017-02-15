@@ -23,6 +23,9 @@
             BOTTOM: 'bottom'
         },
         EVENTS: {
+            GAME: {
+                START: 'game:start'
+            },
             DOM_CONTENT_LOADED: 'DOMContentLoaded',
             ELEMENT: {
                 CLICK: 'element:click',
