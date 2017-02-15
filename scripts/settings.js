@@ -30,7 +30,7 @@
             ELEMENT: {
                 CLICK: 'element:click',
                 MOVED: 'element:moved',
-                ANIMATED: 'element:aminated'
+                ANIMATED: 'element:animated'
             },
             ELEMENTS: {
                 RENDERED: 'elements:rendered',
