@@ -87,7 +87,7 @@
         
         setupMovementListeners() {
             $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.movementHandler(event, dto));
-            $(document).on(SETTINGS.EVENTS.ELEMENT.ANIMATED, (event) => this.checkGameStatus());
+            $(document).on(SETTINGS.EVENTS.ELEMENT.ANIMATED, (event) => this.onElementAnimated());
         }
     
         destroyGameListeners() {
@@ -106,11 +106,18 @@
             this.destroyMovementListeners();
         }
         
+        onElementAnimated() {
+            this.resultsModel.incrementMove();
+            this.resultsView.setMoves(this.resultsModel.getMoves());
+            
+            this.checkGameStatus();
+        }
+    
         checkGameStatus() {
             let isGameOver = this.puzzleModels.every((model) => {
                 return model.isOnTargetPosition();
             });
-            
+    
             if (isGameOver) {
                 // this.destroyListeners();
                 $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
