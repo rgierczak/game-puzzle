@@ -3,10 +3,11 @@ body {
     padding: 0;
     
     user-select: none;
+    background-color: #f7f7f7;
 }
 
 #puzzle-wrapper {
-    margin: 0 auto;
+    margin: .5rem auto;
     padding: 0;
     height: auto;
     width: auto;
@@ -19,6 +20,5 @@ body {
     cursor: pointer;
     background-color: #018aff;
     position: absolute;
-    border: solid #ffffff;
-    border-radius: 10px;
+    border: solid transparent;
 }

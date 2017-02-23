@@ -2,11 +2,8 @@
     'use strict';
     
     let MaterializeHelper = {
-        initSideNav() {
-            $(".button-collapse").sideNav({
-                menuWidth: 500,
-                edge: 'right'
-            });
+        setup() {
+
         }
     };
     

@@ -5,7 +5,7 @@
         STYLE: {
             ELEMENT_SIZE: 100,
             ELEMENTS_IN_ROW: 4,
-            BORDER_SIZE: 3,
+            BORDER_SIZE: 6,
             EASING_TYPE: 'easeOutBack',
             MOVE_TIME: 300,
             INIT_MOVE_TIME: 100,
