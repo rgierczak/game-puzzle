@@ -112,7 +112,7 @@
             });
             
             if (isGameOver) {
-                this.destroyListeners();
+                // this.destroyListeners();
                 $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
             }
         }
