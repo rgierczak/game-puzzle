@@ -5,15 +5,26 @@
     
     class GameView {
         constructor() {
+            this.$button = $('#start-game');
+            
             this.setupListeners();
+            this.disableStartButton();
         }
         
         setupListeners() {
-            $('#start-game').on('click', (event, dto) => this.onClickHandler(event, dto));
+            this.$button.on('click', (event, dto) => this.onClickHandler(event, dto));
         }
         
         destroyListeners() {
-            $('#start-game').off('click');
+            this.$button.off('click');
+        }
+        
+        enableStartButton() {
+            this.$button.removeClass('disabled');
+        }
+        
+        disableStartButton() {
+            this.$button.addClass('disabled');
         }
         
         onClickHandler() {

@@ -19,7 +19,7 @@
         }
         
         every(callback) {
-            this.list.every(callback);
+            return this.list.every(callback);
         }
         
         setPosition(callback) {

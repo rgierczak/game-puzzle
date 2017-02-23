@@ -21,7 +21,7 @@
             
             this.buildModels();
             this.buildViews();
-            this.setupListeners();
+            this.setupGameListeners();
         }
         
         buildModels() {
@@ -37,20 +37,31 @@
             this.puzzleView.render(this.puzzleModels);
         }
         
-        setupListeners() {
-            $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.movementHandler(event, dto));
-            $(document).on(SETTINGS.EVENTS.ELEMENT.ANIMATED, (event) => this.checkGameStatus());
+        setupGameListeners() {
             $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
             $(document).on(SETTINGS.EVENTS.ELEMENTS.SHUFFLED, (event) => this.onElementsShuffled(event));
             $(document).on(SETTINGS.EVENTS.GAME.START, (event) => this.onGameStart(event));
         }
         
-        destroyListeners() {
-            $(document).off(SETTINGS.EVENTS.ELEMENT.CLICK);
+        setupMovementListeners() {
+            $(document).on(SETTINGS.EVENTS.ELEMENT.CLICK, (event, dto) => this.movementHandler(event, dto));
+            $(document).on(SETTINGS.EVENTS.ELEMENT.ANIMATED, (event) => this.checkGameStatus());
+        }
+    
+        destroyGameListeners() {
             $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
-            $(document).off(SETTINGS.EVENTS.ELEMENT.ANIMATED);
             $(document).off(SETTINGS.EVENTS.ELEMENTS.SHUFFLED);
             $(document).off(SETTINGS.EVENTS.GAME.START);
+        }
+        
+        destroyMovementListeners() {
+            $(document).off(SETTINGS.EVENTS.ELEMENT.CLICK);
+            $(document).off(SETTINGS.EVENTS.ELEMENT.ANIMATED);
+        }
+        
+        destroyListeners() {
+            this.destroyGameListeners();
+            this.destroyMovementListeners();
         }
         
         checkGameStatus() {
@@ -66,15 +77,18 @@
     
         onElementsShuffled() {
             console.log('All elements have been shuffled.');
-            // this.gameView.setupListeners();
+            this.setupMovementListeners();
+            this.gameView.enableStartButton();
         }
         
         onElementsRendered() {
             console.log('All elements have been rendered.');
+            this.gameView.enableStartButton();
         }
         
         onGameStart() {
-            this.gameView.destroyListeners();
+            this.destroyMovementListeners();
+            this.gameView.disableStartButton();
             this.shuffle();
         }
         
