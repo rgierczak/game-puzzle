@@ -4,23 +4,32 @@
     let SETTINGS = root.puzzle.settings;
     let ShuffleHelper = root.puzzle.helpers.ShuffleHelper;
     let PromiseHelper = root.puzzle.helpers.PromiseHelper;
+    
     let PuzzleListModel = root.puzzle.models.PuzzleListModel;
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
+    let ResultsModel = root.puzzle.models.ResultsModel;
+    
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
     let PuzzleListView = root.puzzle.views.PuzzleListView;
     let StartButtonView = root.puzzle.views.StartButtonView;
+    let ResultsView = root.puzzle.views.ResultsView;
     
     const ELEMENTS_AMOUNT = SETTINGS.STYLE.ELEMENTS_IN_ROW * SETTINGS.STYLE.ELEMENTS_IN_ROW;
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
+    const MOVES = 0;
+    const CORRECT_ELEMENTS = 60;
+    const INCORRECT_ELEMENTS = 0;
     
     class PuzzleController {
         constructor() {
             this.startButtonView = null;
+            this.resultsView = null;
             this.isPuzzleViewShuffled = false;
             this.setupGame();
         }
     
         setupGame() {
+            this.resultsModel = null;
             this.puzzleModels = null;
             this.puzzleView = null;
             
@@ -31,13 +40,40 @@
         }
         
         buildModels() {
+            this.buildPuzzleModels();
+            this.buildResultsModel();
+        }
+    
+        buildViews() {
+            this.buildStartButtonView();
+            this.buildPuzzleView();
+            this.buildResultsView();
+        }
+    
+        buildPuzzleModels() {
             this.puzzleModels = new PuzzleListModel();
             for (let i = 0; i < ELEMENTS_AMOUNT - 1; i++)
                 this.puzzleModels.add(new PuzzleElementModel(i));
         }
-        
-        buildViews() {
+    
+        buildResultsModel() {
+            this.resultsModel = new ResultsModel({
+                moves: MOVES,
+                correctElements: CORRECT_ELEMENTS,
+                incorrectElements: INCORRECT_ELEMENTS
+            });
+        }
+    
+        buildStartButtonView() {
             this.startButtonView = new StartButtonView();
+        }
+    
+        buildResultsView() {
+            this.resultsView = new ResultsView();
+            this.resultsView.render(this.resultsModel);
+        }
+    
+        buildPuzzleView() {
             this.puzzleView = new PuzzleListView();
             this.puzzleModels.setPosition((model) => this.puzzleView.add(new PuzzleElementView(model)));
             this.puzzleView.render(this.puzzleModels);

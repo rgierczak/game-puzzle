@@ -2,9 +2,11 @@
     'use strict';
     
     class ResultsModel {
-        constructor() {
+        constructor(results) {
             this.time = null;
-            this.moves = null;
+            this.moves = results.moves;
+            this.correctElements = results.correctElements;
+            this.incorrectElements = results.incorrectElements;
         }
     }
     
