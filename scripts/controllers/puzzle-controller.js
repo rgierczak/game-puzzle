@@ -8,14 +8,14 @@
     let PuzzleElementModel = root.puzzle.models.PuzzleElementModel;
     let PuzzleElementView = root.puzzle.views.PuzzleElementView;
     let PuzzleListView = root.puzzle.views.PuzzleListView;
-    let GameView = root.puzzle.views.GameView;
+    let StartButtonView = root.puzzle.views.StartButtonView;
     
     const ELEMENTS_AMOUNT = SETTINGS.STYLE.ELEMENTS_IN_ROW * SETTINGS.STYLE.ELEMENTS_IN_ROW;
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
     
     class PuzzleController {
         constructor() {
-            this.gameView = null;
+            this.startButtonView = null;
             this.isPuzzleViewShuffled = false;
             this.setupGame();
         }
@@ -37,7 +37,7 @@
         }
         
         buildViews() {
-            this.gameView = new GameView();
+            this.startButtonView = new StartButtonView();
             this.puzzleView = new PuzzleListView();
             this.puzzleModels.setPosition((model) => this.puzzleView.add(new PuzzleElementView(model)));
             this.puzzleView.render(this.puzzleModels);
@@ -86,32 +86,32 @@
             
             this.isPuzzleViewShuffled = true;
             this.setupMovementListeners();
-            this.gameView.enableStartButton();
+            this.startButtonView.enableStartButton();
         }
         
         onElementsRendered() {
             console.log('All elements have been rendered.');
             
             if (this.isPuzzleViewShuffled) {
-                this.startGame();
+                this.startShuffle();
             } else {
-                this.gameView.enableStartButton();
+                this.startButtonView.enableStartButton();
             }
         }
         
         onGameStart() {
             if (this.isPuzzleViewShuffled) {
-                console.log('restartGame');
+                console.log('setupGame');
                 this.setupGame();
             } else {
-                this.startGame();
+                this.startShuffle();
             }
         }
     
-        startGame() {
-            console.log('startGame');
+        startShuffle() {
+            console.log('startShuffle');
             this.destroyMovementListeners();
-            this.gameView.disableStartButton();
+            this.startButtonView.disableStartButton();
             this.shuffle();
         }
         

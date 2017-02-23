@@ -3,7 +3,7 @@
     
     let SETTINGS = root.puzzle.settings;
     
-    class GameView {
+    class StartButtonView {
         constructor() {
             this.$button = $('#start-game');
             
@@ -33,5 +33,5 @@
         }
     }
     
-    root.puzzle.views.GameView = GameView;
+    root.puzzle.views.StartButtonView = StartButtonView;
 })(window);
