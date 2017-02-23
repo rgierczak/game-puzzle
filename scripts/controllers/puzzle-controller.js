@@ -16,9 +16,15 @@
     class PuzzleController {
         constructor() {
             this.gameView = null;
+            this.isPuzzleViewShuffled = false;
+            this.setupGame();
+        }
+    
+        setupGame() {
             this.puzzleModels = null;
             this.puzzleView = null;
             
+            this.destroyListeners();
             this.buildModels();
             this.buildViews();
             this.setupGameListeners();
@@ -77,16 +83,33 @@
     
         onElementsShuffled() {
             console.log('All elements have been shuffled.');
+            
+            this.isPuzzleViewShuffled = true;
             this.setupMovementListeners();
             this.gameView.enableStartButton();
         }
         
         onElementsRendered() {
             console.log('All elements have been rendered.');
-            this.gameView.enableStartButton();
+            
+            if (this.isPuzzleViewShuffled) {
+                this.startGame();
+            } else {
+                this.gameView.enableStartButton();
+            }
         }
         
         onGameStart() {
+            if (this.isPuzzleViewShuffled) {
+                console.log('restartGame');
+                this.setupGame();
+            } else {
+                this.startGame();
+            }
+        }
+    
+        startGame() {
+            console.log('startGame');
             this.destroyMovementListeners();
             this.gameView.disableStartButton();
             this.shuffle();

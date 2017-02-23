@@ -7,6 +7,7 @@
         constructor() {
             this.$button = $('#start-game');
             
+            this.destroyListeners();
             this.setupListeners();
             this.disableStartButton();
         }
