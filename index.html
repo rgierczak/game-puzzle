@@ -39,7 +39,6 @@
         <div class="row">
             <div class="col s12">
                 <div id="puzzle-wrapper"></div>
-                <div id="dialog"></div>
             </div>
         </div>
         <div class="row">
@@ -61,12 +60,34 @@
                 </div>
             </div>
             <div class="col s4"></div>
-
         </div>
 
         <div class="row">
-
             <a id="start-game" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">play_arrow</i></a>
+        </div>
+        
+        <div id="dialog" class="modal">
+            <div class="modal-content">
+                <h4>GAME OVER</h4>
+                <p>Your score:</p>
+                <div class="section">
+                    <table class="bordered">
+                        <tbody>
+                        <tr>
+                            <td>time</td>
+                            <td id="time-dialog"></td>
+                        </tr>
+                        <tr>
+                            <td>moves</td>
+                            <td id="moves-dialog"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+            </div>
         </div>
     </div>
 </div>

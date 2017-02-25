@@ -20,8 +20,6 @@
             
             this.timerId = setInterval(() => {
                 this.setClock();
-                $(document).trigger(SETTINGS.RESULTS.TIME.UPDATE, [this.time]);
-    
             }, this.interval);
         },
         
@@ -47,6 +45,8 @@
             this.time = 
                 parseUnit(this.minutes) + ':' + 
                 parseUnit(this.seconds);
+            
+            $(document).trigger(SETTINGS.RESULTS.TIME.UPDATE, [this.time]);
         }
     };
     

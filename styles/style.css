@@ -22,3 +22,7 @@ body {
     position: absolute;
     border: solid transparent;
 }
+
+.modal {
+    width: 30% !important;
+}

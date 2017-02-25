@@ -13,6 +13,7 @@
     let PuzzleListView = root.puzzle.views.PuzzleListView;
     let StartButtonView = root.puzzle.views.StartButtonView;
     let ResultsView = root.puzzle.views.ResultsView;
+    let DialogView = root.puzzle.views.DialogView;
     
     const ELEMENTS_AMOUNT = SETTINGS.STYLE.ELEMENTS_IN_ROW * SETTINGS.STYLE.ELEMENTS_IN_ROW;
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
@@ -45,6 +46,7 @@
             this.buildStartButtonView();
             this.buildPuzzleView();
             this.buildResultsView();
+            this.buildDialogView();
         }
     
         buildPuzzleModels() {
@@ -57,6 +59,10 @@
             this.resultsModel = new ResultsModel();
         }
     
+        buildDialogView() {
+            this.dialogView = new DialogView();
+        }
+        
         buildStartButtonView() {
             this.startButtonView = new StartButtonView();
         }
@@ -75,13 +81,13 @@
             $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
             $(document).on(SETTINGS.EVENTS.ELEMENTS.SHUFFLED, (event) => this.onElementsShuffled(event));
             $(document).on(SETTINGS.EVENTS.GAME.START, (event) => this.onGameStart(event));
+            $(document).on(SETTINGS.EVENTS.GAME.OVER, (event) => this.onGameOver(event));
             $(document).on(SETTINGS.RESULTS.TIME.UPDATE, (event, dto) => this.onTimeUpdate(dto));
         }
         
         onTimeUpdate(dto) {
             this.resultsModel.setTime(dto);
             this.resultsView.setTime(dto);
-            console.log('onTimeUpdate: ', this.resultsModel);
         }
         
         setupMovementListeners() {
@@ -93,6 +99,7 @@
             $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
             $(document).off(SETTINGS.EVENTS.ELEMENTS.SHUFFLED);
             $(document).off(SETTINGS.EVENTS.GAME.START);
+            $(document).off(SETTINGS.EVENTS.GAME.OVER);
             $(document).off(SETTINGS.RESULTS.TIME.UPDATE);
         }
         
@@ -120,13 +127,20 @@
     
             if (isGameOver) {
                 this.resultsView.stopTimer();
-                $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
+                this.displayResults();
             }
         }
     
+        displayResults() {
+            let results = {
+                time: this.resultsModel.getTime(),
+                moves: this.resultsModel.getMoves()
+            };
+    
+            this.dialogView.show(results);
+        }
+    
         onElementsShuffled() {
-            console.log('All elements have been shuffled.');
-            
             this.resultsView.startTimer();
             this.isPuzzleViewShuffled = true;
             this.setupMovementListeners();
@@ -134,8 +148,6 @@
         }
         
         onElementsRendered() {
-            console.log('All elements have been rendered.');
-            
             if (this.isPuzzleViewShuffled) {
                 this.startShuffle();
             } else {
@@ -145,15 +157,17 @@
         
         onGameStart() {
             if (this.isPuzzleViewShuffled) {
-                console.log('setupGame');
                 this.setupGame();
             } else {
                 this.startShuffle();
             }
         }
+        
+        onGameOver() {
+            this.destroyMovementListeners();
+        }
     
         startShuffle() {
-            console.log('startShuffle');
             this.destroyMovementListeners();
             this.startButtonView.disableStartButton();
             this.shuffle();

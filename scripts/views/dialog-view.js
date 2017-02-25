@@ -1,64 +1,33 @@
 (function (root) {
     'use strict';
     
-    let DOMHelper = root.puzzle.helpers.DOMHelper;
     let SETTINGS = root.puzzle.settings;
     
-    function getMessage(messageType) {
-        switch (messageType) {
-            case 'welcome':
-                return {
-                    title: 'Welcome in numeric puzzle game',
-                    body: 'The goal is to set number sequence in ascending order, starting from top left corner, ' +
-                    'as fast as you can!' + '\<br/>\<br/>' + 'Good luck!'
-                };
-            case 'game-over':
-                return {
-                    title: 'GAME OVER',
-                    body: 'Congratulations!'
-                };
-            default:
-                return 'Unrecognized message type';
-        }
-    }
-    
     class DialogView {
-        constructor(messageType) {
-            this.$template = $('#dialog');
-            this.createDialog(messageType);
+        constructor() {
+            this.$template = $('.modal');
+            
+            this.setup();
         }
         
-        createDialog(messageType) {
-            let message = getMessage(messageType);
-            this.renderDialogBody(message);
-            this.buildDialog(message);
-        }
-    
-        renderDialogBody(message) {
-            let $body = DOMHelper.createDialogBody(message);
-            DOMHelper.html(this.$template, $body);
-        }
-    
-        buildDialog(message) {
-            this.$template.dialog({
-                title: message.title,
-                width: SETTINGS.STYLE.DIALOG_WIDTH,
-                height: SETTINGS.STYLE.DIALOG_HEIGHT,
-                resizable: false,
-                draggable: false,
-                buttons: [
-                    {
-                        text: 'PLAY',
-                        icons: {
-                            primary: 'ui-icon-play'
-                        },
-                        click: function() {
-                            $(this).dialog('close');
-                            $(document).trigger(SETTINGS.EVENTS.DIALOG.CLICKED_OK);
-                        }
-                    }
-                ]
+        setup() {
+            this.$template.modal({
+                dismissible: true,
+                opacity: .5,
+                inDuration: 150,
+                outDuration: 200,
+                complete: () => {
+                    $(document).trigger(SETTINGS.EVENTS.GAME.OVER);
+                }
             });
+        }
+        
+        show(data) {
+            debugger;
+            this.$template.find('#time-dialog').text(data.time);
+            this.$template.find('#moves-dialog').text(data.moves);
+    
+            this.$template.modal('open');
         }
     }
     

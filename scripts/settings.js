@@ -24,7 +24,8 @@
         },
         EVENTS: {
             GAME: {
-                START: 'game:start'
+                START: 'game:start',
+                OVER: 'game:over'
             },
             DOM_CONTENT_LOADED: 'DOMContentLoaded',
             ELEMENT: {
@@ -35,11 +36,6 @@
             ELEMENTS: {
                 RENDERED: 'elements:rendered',
                 SHUFFLED: 'elements:shuffled'
-            },
-            DIALOG: {
-                SHOW_OK: 'dialog:show-ok',
-                SHOW_GAME_OVER: 'dialog:show-game-over',
-                CLICKED_OK: 'dialog:clicked-ok'
             }
         },
         RESULTS: {
