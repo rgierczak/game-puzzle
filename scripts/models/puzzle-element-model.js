@@ -34,7 +34,7 @@
         }
         
         isOnTargetPosition() {
-            return this.getOriginId() == this.getPositionProperty('currentId');
+            return this.getOriginId() == this.getPositionProperty('currentId') + 1;
         }
     }
     

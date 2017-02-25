@@ -51,7 +51,7 @@
     
         buildPuzzleModels() {
             this.puzzleModels = new PuzzleListModel();
-            for (let i = 0; i < ELEMENTS_AMOUNT - 1; i++)
+            for (let i = 1; i < ELEMENTS_AMOUNT; i++)
                 this.puzzleModels.add(new PuzzleElementModel(i));
         }
     
