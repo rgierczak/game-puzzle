@@ -3,7 +3,7 @@
     
     const SETTINGS = {
         STYLE: {
-            ELEMENT_SIZE: 100,
+            ELEMENT_SIZE: 80,
             ELEMENTS_IN_ROW: 4,
             BORDER_SIZE: 6,
             EASING_TYPE: 'easeOutBack',
@@ -14,7 +14,7 @@
             CORRECT_POSITION_COLOR: '#00d025',
             INCORRECT_POSITION_COLOR: '#018aff',
             SHUFFLE_ITERATIONS: 100,
-            SHUFFLE_MOVE_TIME: 70
+            SHUFFLE_MOVE_TIME: 100
         },
         POSITIONS: {
             LEFT: 'left',
