@@ -2,11 +2,9 @@
     'use strict';
     
     class ResultsModel {
-        constructor(results) {
-            this.time = null;
-            this.moves = results.moves;
-            this.correctElements = results.correctElements;
-            this.incorrectElements = results.incorrectElements;
+        constructor() {
+            this.time = '00:00';
+            this.moves = 0;
         }
         
         incrementMove() {
@@ -15,6 +13,14 @@
         
         getMoves() {
             return this.moves;
+        }
+        
+        getTime() {
+            return this.time;
+        }
+        
+        setTime(time) {
+            this.time = time;
         }
     }
     

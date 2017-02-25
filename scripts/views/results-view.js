@@ -1,36 +1,45 @@
 (function (root) {
     'use strict';
+
+    const DEFAULT_MOVES = 0;
+    const DEFAULT_TIME = '00:00';
+    
+    let Timer = root.puzzle.helpers.Timer;
     
     class ResultsView {
-        constructor() {
+        constructor(model) {
             this.$time = $('#time');
             this.$moves = $('#moves');
-            this.$correctElements = $('#correct-elements');
-            this.$incorrectElements = $('#incorrect-elements');
             
-            this.setupListeners();
+            this.clearView();
+            this.render(model);
+        }
+        
+        clearView() {
+            this.stopTimer();
+            this.setMoves(DEFAULT_MOVES);
+            this.setTime(DEFAULT_TIME);
         }
         
         render(model) {
-            this.setMoves(model.moves);
-            this.setCorrectElements(model.correctElements);
-            this.setIncorrectElements(model.incorrectElements);
+            this.setMoves(model.getMoves());
+            this.setTime(model.getTime());
         }
         
         setMoves(moves) {
             this.$moves.text(moves);
         }
         
-        setCorrectElements(elements) {
-            this.$correctElements.text(elements);
+        startTimer() {
+            Timer.start();
         }
         
-        setIncorrectElements(elements) {
-            this.$incorrectElements.text(elements);
+        stopTimer() {
+            Timer.stop();
         }
         
-        setupListeners() {
-            
+        setTime(time) {
+            this.$time.text(time);
         }
     }
     

@@ -17,8 +17,6 @@
     const ELEMENTS_AMOUNT = SETTINGS.STYLE.ELEMENTS_IN_ROW * SETTINGS.STYLE.ELEMENTS_IN_ROW;
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
     const MOVES = 0;
-    const CORRECT_ELEMENTS = 60;
-    const INCORRECT_ELEMENTS = 0;
     
     class PuzzleController {
         constructor() {
@@ -57,11 +55,7 @@
         }
     
         buildResultsModel() {
-            this.resultsModel = new ResultsModel({
-                moves: MOVES,
-                correctElements: CORRECT_ELEMENTS,
-                incorrectElements: INCORRECT_ELEMENTS
-            });
+            this.resultsModel = new ResultsModel();
         }
     
         buildStartButtonView() {
@@ -69,8 +63,7 @@
         }
     
         buildResultsView() {
-            this.resultsView = new ResultsView();
-            this.resultsView.render(this.resultsModel);
+            this.resultsView = new ResultsView(this.resultsModel);
         }
     
         buildPuzzleView() {
@@ -83,6 +76,12 @@
             $(document).on(SETTINGS.EVENTS.ELEMENTS.RENDERED, (event) => this.onElementsRendered(event));
             $(document).on(SETTINGS.EVENTS.ELEMENTS.SHUFFLED, (event) => this.onElementsShuffled(event));
             $(document).on(SETTINGS.EVENTS.GAME.START, (event) => this.onGameStart(event));
+            $(document).on(SETTINGS.RESULTS.TIME.UPDATE, (event, dto) => this.onTimeUpdate(dto));
+        }
+        
+        onTimeUpdate(dto) {
+            console.log('onTimeUpdate: ', dto);
+            this.resultsView.setTime(dto);
         }
         
         setupMovementListeners() {
@@ -94,6 +93,7 @@
             $(document).off(SETTINGS.EVENTS.ELEMENTS.RENDERED);
             $(document).off(SETTINGS.EVENTS.ELEMENTS.SHUFFLED);
             $(document).off(SETTINGS.EVENTS.GAME.START);
+            $(document).off(SETTINGS.RESULTS.TIME.UPDATE);
         }
         
         destroyMovementListeners() {
@@ -119,7 +119,7 @@
             });
     
             if (isGameOver) {
-                // this.destroyListeners();
+                this.resultsView.clearView();
                 $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
             }
         }
@@ -127,6 +127,7 @@
         onElementsShuffled() {
             console.log('All elements have been shuffled.');
             
+            this.resultsView.startTimer();
             this.isPuzzleViewShuffled = true;
             this.setupMovementListeners();
             this.startButtonView.enableStartButton();

@@ -13,7 +13,7 @@
             DIALOG_HEIGHT: 300,
             CORRECT_POSITION_COLOR: '#00d025',
             INCORRECT_POSITION_COLOR: '#018aff',
-            SHUFFLE_ITERATIONS: 100,
+            SHUFFLE_ITERATIONS: 5,
             SHUFFLE_MOVE_TIME: 70
         },
         POSITIONS: {
@@ -40,6 +40,11 @@
                 SHOW_OK: 'dialog:show-ok',
                 SHOW_GAME_OVER: 'dialog:show-game-over',
                 CLICKED_OK: 'dialog:clicked-ok'
+            }
+        },
+        RESULTS: {
+            TIME: {
+                UPDATE: 'time:update'
             }
         },
         MESSAGES: {
