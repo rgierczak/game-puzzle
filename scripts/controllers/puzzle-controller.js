@@ -16,7 +16,6 @@
     
     const ELEMENTS_AMOUNT = SETTINGS.STYLE.ELEMENTS_IN_ROW * SETTINGS.STYLE.ELEMENTS_IN_ROW;
     const CONTAINER_SIZE = SETTINGS.STYLE.ELEMENT_SIZE * (SETTINGS.STYLE.ELEMENTS_IN_ROW - 1);
-    const MOVES = 0;
     
     class PuzzleController {
         constructor() {
@@ -80,8 +79,9 @@
         }
         
         onTimeUpdate(dto) {
-            console.log('onTimeUpdate: ', dto);
+            this.resultsModel.setTime(dto);
             this.resultsView.setTime(dto);
+            console.log('onTimeUpdate: ', this.resultsModel);
         }
         
         setupMovementListeners() {
@@ -119,7 +119,7 @@
             });
     
             if (isGameOver) {
-                this.resultsView.clearView();
+                this.resultsView.stopTimer();
                 $(document).trigger(SETTINGS.EVENTS.DIALOG.SHOW_GAME_OVER);
             }
         }
