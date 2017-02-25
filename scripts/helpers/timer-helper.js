@@ -1,9 +1,10 @@
 (function (root) {
+    'use strict';
     
     let SETTINGS = root.puzzle.settings;
     
     function parseUnit(unit) {
-        let leadingZero = unit < 10 ? "0" : "";
+        let leadingZero = unit < 10 ? '0' : '';
         return  leadingZero + unit.toString();
     }
     

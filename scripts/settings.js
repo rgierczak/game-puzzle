@@ -13,7 +13,7 @@
             DIALOG_HEIGHT: 300,
             CORRECT_POSITION_COLOR: '#00d025',
             INCORRECT_POSITION_COLOR: '#018aff',
-            SHUFFLE_ITERATIONS: 5,
+            SHUFFLE_ITERATIONS: 100,
             SHUFFLE_MOVE_TIME: 70
         },
         POSITIONS: {
@@ -30,7 +30,6 @@
             DOM_CONTENT_LOADED: 'DOMContentLoaded',
             ELEMENT: {
                 CLICK: 'element:click',
-                MOVED: 'element:moved',
                 ANIMATED: 'element:animated'
             },
             ELEMENTS: {
@@ -42,10 +41,6 @@
             TIME: {
                 UPDATE: 'time:update'
             }
-        },
-        MESSAGES: {
-            WELCOME: 'welcome',
-            GAME_OVER: 'game-over'
         }
     };
     

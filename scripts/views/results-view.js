@@ -1,8 +1,5 @@
 (function (root) {
     'use strict';
-
-    const DEFAULT_MOVES = 0;
-    const DEFAULT_TIME = '00:00';
     
     let Timer = root.puzzle.helpers.Timer;
     
@@ -11,22 +8,21 @@
             this.$time = $('#time');
             this.$moves = $('#moves');
             
-            this.clearView();
+            this.clearView(model);
             this.render(model);
         }
         
-        clearView() {
+        clearView(model) {
             this.stopTimer();
-            this.setMoves(DEFAULT_MOVES);
-            this.setTime(DEFAULT_TIME);
+            this.render(model)
         }
         
         render(model) {
-            this.setMoves(model.getMoves());
-            this.setTime(model.getTime());
+            this.renderMoves(model.getMoves());
+            this.renderTime(model.getTime());
         }
         
-        setMoves(moves) {
+        renderMoves(moves) {
             this.$moves.text(moves);
         }
         
@@ -38,7 +34,7 @@
             Timer.stop();
         }
         
-        setTime(time) {
+        renderTime(time) {
             this.$time.text(time);
         }
     }

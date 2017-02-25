@@ -9,13 +9,13 @@
         },
         
         getRandomOriginId(array) {
-            let randomIndex = ShuffleHelper.getRandomNumber(array);
+            let randomIndex = this.getRandomNumber(array);
             let isPreviousIndex = (array[randomIndex] === this.lastMovedId); 
             
             if (isPreviousIndex) {
-                ShuffleHelper.getRandomOriginId(array);
+                this.getRandomOriginId(array);
             } else {
-                ShuffleHelper.lastMovedId = array[randomIndex];
+                this.lastMovedId = array[randomIndex];
             }
             
             return this.lastMovedId;

@@ -87,7 +87,7 @@
         
         onTimeUpdate(dto) {
             this.resultsModel.setTime(dto);
-            this.resultsView.setTime(dto);
+            this.resultsView.renderTime(dto);
         }
         
         setupMovementListeners() {
@@ -115,7 +115,7 @@
         
         onElementAnimated() {
             this.resultsModel.incrementMove();
-            this.resultsView.setMoves(this.resultsModel.getMoves());
+            this.resultsView.renderMoves(this.resultsModel.getMoves());
             
             this.checkGameStatus();
         }
