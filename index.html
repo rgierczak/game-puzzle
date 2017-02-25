@@ -6,81 +6,68 @@
     <link href="styles/style.css" rel="stylesheet">
     <link href="vendors/jquery/jquery-ui.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="vendors/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="vendors/materialize/css/materialize.min.css" type="text/css" rel="stylesheet"
+          media="screen,projection"/>
 
     <script type="text/javascript" src="vendors/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="vendors/jquery/jquery-ui.min.js"></script>
     <script type="text/javascript" src="vendors/materialize/js/materialize.min.js"></script>
 </head>
 <body>
-    <script type="text/javascript" src="scripts/main.js"></script>
-    <script type="text/javascript" src="scripts/settings.js"></script>
-    <script type="text/javascript" src="scripts/helpers/shuffle-helper.js"></script>
-    <script type="text/javascript" src="scripts/helpers/dom-helper.js"></script>
-    <script type="text/javascript" src="scripts/helpers/promise-helper.js"></script>
-    <script type="text/javascript" src="scripts/helpers/materialize-helper.js"></script>
-    <script type="text/javascript" src="scripts/models/puzzle-element-model.js"></script>
-    <script type="text/javascript" src="scripts/models/puzzle-list-model.js"></script>
-    <script type="text/javascript" src="scripts/models/results-model.js"></script>
-    <script type="text/javascript" src="scripts/views/dialog-view.js"></script>
-    <script type="text/javascript" src="scripts/views/puzzle-element-view.js"></script>
-    <script type="text/javascript" src="scripts/views/puzzle-list-view.js"></script>
-    <script type="text/javascript" src="scripts/views/results-view.js"></script>
-    <script type="text/javascript" src="scripts/views/start-button-view.js"></script>
-    <script type="text/javascript" src="scripts/controllers/puzzle-controller.js"></script>
-    <script type="text/javascript" src="scripts/app.js"></script>
+<script type="text/javascript" src="scripts/main.js"></script>
+<script type="text/javascript" src="scripts/settings.js"></script>
+<script type="text/javascript" src="scripts/helpers/shuffle-helper.js"></script>
+<script type="text/javascript" src="scripts/helpers/dom-helper.js"></script>
+<script type="text/javascript" src="scripts/helpers/promise-helper.js"></script>
+<script type="text/javascript" src="scripts/helpers/materialize-helper.js"></script>
+<script type="text/javascript" src="scripts/models/puzzle-element-model.js"></script>
+<script type="text/javascript" src="scripts/models/puzzle-list-model.js"></script>
+<script type="text/javascript" src="scripts/models/results-model.js"></script>
+<script type="text/javascript" src="scripts/views/dialog-view.js"></script>
+<script type="text/javascript" src="scripts/views/puzzle-element-view.js"></script>
+<script type="text/javascript" src="scripts/views/puzzle-list-view.js"></script>
+<script type="text/javascript" src="scripts/views/results-view.js"></script>
+<script type="text/javascript" src="scripts/views/start-button-view.js"></script>
+<script type="text/javascript" src="scripts/controllers/puzzle-controller.js"></script>
+<script type="text/javascript" src="scripts/app.js"></script>
 
-    <nav class="light-blue lighten-1"></nav>
-    
-    <div class="container">
-        <div class="section">
-            <div class="row">
-                <div class="card-panel col s6">
-                    <ul class="tabs">
-                        <li class="tab col s6"><a class="active" href="#results">Results</a></li>
-                        <li class="tab col s6"><a href="#settings">Settings</a></li>
-                    </ul>
-                    
-                    <div class="section" id="results">
-                        <table class="striped">
-                            <tbody>
-                            <tr>
-                                <td>time</td>
-                                <td id="time">00:00:01</td>
-                            </tr>
-                            <tr>
-                                <td>moves</td>
-                                <td id="moves"></td>
-                            </tr>
-                            <tr>
-                                <td>correct elements</td>
-                                <td id="correct-elements"></td>
-                            </tr>
-                            <tr>
-                                <td>incorrect elements</td>
-                                <td id="incorrect-elements"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="section" id="settings">
-                        <form action="#">
-                            <p class="range-field">
-                                <input type="range" id="test5" min="0" max="100" />
-                            </p>
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="col s6">
-                    <div id="puzzle-wrapper"></div>
-                    <div id="dialog"></div>
-                </div>
+<nav class="light-blue lighten-1"></nav>
 
-                <a id="start-game" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">play_arrow</i></a>
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col s12">
+                <div id="puzzle-wrapper"></div>
+                <div id="dialog"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col s4"></div>
+            <div class="card-panel col s4">
+                <div class="section">
+                    <table class="striped">
+                        <tbody>
+                        <tr>
+                            <td>time</td>
+                            <td id="time">00:00:01</td>
+                        </tr>
+                        <tr>
+                            <td>moves</td>
+                            <td id="moves"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col s4"></div>
+
+        </div>
+
+        <div class="row">
+
+            <a id="start-game" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">play_arrow</i></a>
+        </div>
     </div>
+</div>
 </body>
 </html>
