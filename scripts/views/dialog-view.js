@@ -23,7 +23,6 @@
         }
         
         show(data) {
-            debugger;
             this.$template.find('#time-dialog').text(data.time);
             this.$template.find('#moves-dialog').text(data.moves);
     

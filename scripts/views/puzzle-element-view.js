@@ -95,7 +95,6 @@
             this.$template.css('height', SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE);
             this.$template.css('lineHeight', SETTINGS.STYLE.ELEMENT_SIZE - SETTINGS.STYLE.BORDER_SIZE + 'px');
             this.$template.css('fontSize', SETTINGS.STYLE.ELEMENT_SIZE / 3);
-            this.$template.css('borderWidth', SETTINGS.STYLE.BORDER_SIZE);
             this.$template.addClass('z-depth-1');
         }
     }

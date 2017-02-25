@@ -13,11 +13,7 @@
         }
         
         setStyle() {
-            let wrapperWidth =
-                (SETTINGS.STYLE.ELEMENT_SIZE +
-                SETTINGS.STYLE.BORDER_SIZE) *
-                SETTINGS.STYLE.ELEMENTS_IN_ROW;
-            
+            let wrapperWidth = SETTINGS.STYLE.ELEMENT_SIZE * SETTINGS.STYLE.ELEMENTS_IN_ROW;
             this.$template.width(wrapperWidth + 'px');
             this.$template.height(wrapperWidth + 'px');
         }
